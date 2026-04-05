@@ -11,7 +11,7 @@ The **Masterwork Crafting Ledger** provides a centralized database of high-end c
 ### Key Features
 * **Class-Specific Filtering:** Quickly narrow down items relevant to your specific character class.
 * **Real-Time Search:** Search by item name or specific materials.
-* **Interactive Material Guides:** Click or tap any ingredient to reveal its specific drop location (e.g., Abyssal Hunts, Explorer Charts, or Master Trials).
+* **Interactive Material Guides:** Click or tap any ingredient to reveal its specific drop location (e.g., Abyssal Hunts, Explorer Charts, or Master Dungeons).
 * **Responsive Design:** Optimized for use on a second monitor or mobile device while gaming.
 
 ---
