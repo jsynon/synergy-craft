@@ -81,11 +81,6 @@
         margin: 0 auto;
     }
 
-    @media (max-width: 600px) {
-        .controls { grid-template-columns: 1fr; }
-        h1 { font-size: 1.8rem; }
-    }
-
     input, select {
         width: 100%;
         padding: 12px;
@@ -94,6 +89,37 @@
         font-size: 1rem;
         box-sizing: border-box;
         font-family: 'Lora', serif;
+    }
+
+    /* MOBILE OPTIMIZATIONS */
+    @media (max-width: 600px) {
+        .ledger-container { padding: 0 10px 20px 10px; }
+        
+        .sticky-header { 
+            padding-top: 10px; 
+            margin-bottom: 15px; 
+        }
+
+        h1 { font-size: 1.5rem; }
+
+        .credits { display: none; }
+
+        .controls { 
+            grid-template-columns: 1fr 1fr; 
+            gap: 6px;
+            padding-bottom: 10px;
+        }
+
+        input, select {
+            padding: 8px 5px;
+            font-size: 0.85rem;
+        }
+
+        /* The fix for your placeholder text */
+        #searchInput::placeholder {
+            font-size: 0.75rem;
+            letter-spacing: -0.5px;
+        }
     }
 
     .items-grid {
@@ -236,7 +262,7 @@
 
         <div class="controls">
             <div class="search-wrapper">
-                <input type="text" id="searchInput" placeholder="Search item or class..." onkeyup="filterData()">
+                <input type="text" id="searchInput" placeholder="Search item/class..." onkeyup="filterData()">
             </div>
             <div class="filter-wrapper">
                 <select id="classFilter" onchange="filterData()">
