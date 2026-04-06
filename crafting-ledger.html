@@ -204,6 +204,11 @@
         color: var(--crimson);
         text-decoration: underline;
     }
+	
+	/* Color Palette from Reference Chart */
+	.color-orange { color: #e67e22; font-weight: 800; } /* Deep Orange/Amber */
+	.color-purple { color: #8e44ad; font-weight: 700; } /* Rich Purple */
+	.color-blue { color: #16a085; font-weight: 700; }   /* Teal/Blue */
 
 </style>
 </head>
@@ -535,7 +540,39 @@
   }
 ];
 
-    function renderTable(data) {
+    function getColorClass(resourceName) {
+    const name = resourceName.toLowerCase();
+    
+    // Orange Items (Formerly Yellow in Chart)
+    if (name.includes("druegarsteel") || 
+        name.includes("fallen god") || 
+        name.includes("abyssal crystal") || 
+        name.includes("menzoberranzan faerzress") || 
+        name.includes("mushroom droplet") || 
+        name.includes("perfect marilith")) {
+        return 'color-orange';
+    }
+    
+    // Purple Items
+    if (name.includes("calcified webbing") || 
+        name.includes("demonweb faerzress") || 
+        name.includes("faerzress rock") || 
+        name.includes("mushroom log") || 
+        name.includes("shroomsap spores") || 
+        name.includes("fungal moss") || 
+        name.includes("fluorescent flora") || 
+        name.includes("goristro hide") || 
+        name.includes("luminescent darklake")) {
+        return 'color-purple';
+    }
+    
+    // Blue/Teal Items
+    if (name.includes("terebinth")) return 'color-blue';
+    
+    return ''; // Default Ink Color
+}
+	
+	function renderTable(data) {
         const grid = document.getElementById('itemsGrid');
         grid.innerHTML = '';
 
@@ -548,18 +585,20 @@
             ).join('');
 
             const ingredientHtml = entry.ingredients.map(ing => {
-                const parts = ing.resource.split(' ');
-                const qty = parts.shift();
-                const name = parts.join(' ');
-                return `
-                    <div class="ingredient-row">
-                        <div class="qty-name-group">
-                            <span class="qty">${qty}</span>
-                            <span class="name">${name}</span>
-                        </div>
-                        <div class="location-text">Source: <strong>${ing.location}</strong></div>
-                    </div>`;
-            }).join('');
+				const parts = ing.resource.split(' ');
+				const qty = parts.shift();
+				const name = parts.join(' ');
+				const colorClass = getColorClass(name); // Call the helper here
+
+				return `
+					<div class="ingredient-row">
+						<div class="qty-name-group">
+							<span class="qty">${qty}</span>
+							<span class="name ${colorClass}">${name}</span>
+						</div>
+						<div class="location-text">Source: <strong>${ing.location}</strong></div>
+					</div>`;
+			}).join('');
 
             card.innerHTML = `
                 <div class="card-header">
