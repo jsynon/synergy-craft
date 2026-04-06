@@ -17,7 +17,7 @@
     body {
         background-color: #121212;
         margin: 0;
-        padding: 0; /* Changed to 0 to support sticky header edge-to-edge */
+        padding: 0;
         font-family: 'Lora', serif;
         display: flex;
         justify-content: center; 
@@ -38,7 +38,6 @@
         min-height: 100vh;
     }
 
-    /* --- STICKY HEADER SECTION --- */
     .sticky-header {
         position: sticky;
         top: 0;
@@ -48,7 +47,6 @@
         padding-top: 30px;
         border-bottom: 3px double var(--gold);
         margin-bottom: 30px;
-        /* Subtle shadow to indicate depth when scrolling */
         box-shadow: 0 10px 20px -10px rgba(0,0,0,0.15);
     }
 
@@ -98,7 +96,6 @@
         font-family: 'Lora', serif;
     }
 
-    /* --- ITEM GRID & CARDS --- */
     .items-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -205,10 +202,23 @@
         text-decoration: underline;
     }
 	
-	/* Color Palette from Reference Chart */
-	.color-orange { color: #e67e22; font-weight: 800; } /* Deep Orange/Amber */
-	.color-purple { color: #8e44ad; font-weight: 700; } /* Rich Purple */
-	.color-blue { color: #16a085; font-weight: 700; }   /* Teal/Blue */
+	.color-orange { color: #e67e22; font-weight: 800; } 
+	.color-purple { color: #8e44ad; font-weight: 700; } 
+	.color-blue { color: #16a085; font-weight: 700; }
+
+    footer {
+        text-align: center;
+        padding: 40px 0 20px 0;
+        border-top: 1px solid rgba(176, 141, 68, 0.3);
+        margin-top: 40px;
+        font-size: 0.9rem;
+        color: var(--ink);
+        opacity: 0.8;
+    }
+
+    footer strong {
+        color: var(--crimson);
+    }
 
 </style>
 </head>
@@ -244,7 +254,13 @@
             </div>
         </div>
     </div>
+    
     <div id="itemsGrid" class="items-grid"></div>
+
+    <footer>
+        <p>Document maintained and provided by the <strong>Synergy</strong> Guild &bull; 2026</p>
+        <p><em>Always verify recipe costs in-game before final processing.</em></p>
+    </footer>
 </div>
 
 <script>
@@ -543,7 +559,6 @@
     function getColorClass(resourceName) {
     const name = resourceName.toLowerCase();
     
-    // Orange Items (Formerly Yellow in Chart)
     if (name.includes("druegarsteel") || 
         name.includes("fallen god") || 
         name.includes("abyssal crystal") || 
@@ -553,7 +568,6 @@
         return 'color-orange';
     }
     
-    // Purple Items
     if (name.includes("calcified webbing") || 
         name.includes("demonweb faerzress") || 
         name.includes("faerzress rock") || 
@@ -566,10 +580,9 @@
         return 'color-purple';
     }
     
-    // Blue/Teal Items
     if (name.includes("terebinth")) return 'color-blue';
     
-    return ''; // Default Ink Color
+    return ''; 
 }
 	
 	function renderTable(data) {
@@ -588,7 +601,7 @@
 				const parts = ing.resource.split(' ');
 				const qty = parts.shift();
 				const name = parts.join(' ');
-				const colorClass = getColorClass(name); // Call the helper here
+				const colorClass = getColorClass(name);
 
 				return `
 					<div class="ingredient-row">
@@ -628,7 +641,6 @@
         renderTable(filtered);
     }
 
-    // Initial Load
     renderTable(craftingData);
 </script>
 </body>
