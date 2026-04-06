@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Synergy - Masterwork Crafting Ledger</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=MedievalSharp&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <style>
     :root {
         --parchment: #fcf5e5;
@@ -56,12 +56,22 @@
     }
 
     h1 {
-        font-family: 'MedievalSharp', cursive;
-        font-size: 2.8rem;
-        color: var(--crimson); 
-        margin: 0 auto;
-        letter-spacing: 2px;
-    }
+    font-family: 'Cinzel', serif; /* Changed from MedievalSharp */
+    font-size: 2.2rem; /* Adjusted slightly as Cinzel is wider */
+    color: var(--crimson); 
+    margin: 0 auto;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.item-title {
+    margin: 5px 0 0 0;
+    font-size: 1.1rem; /* Slightly smaller for better fit */
+    line-height: 1.3;
+    color: var(--ink);
+    font-family: 'Cinzel', serif; /* Changed from MedievalSharp */
+    font-weight: 700;
+}
 
     .credits {
         font-style: italic;
@@ -164,14 +174,6 @@
         font-size: 0.7rem;
         text-transform: uppercase;
         font-weight: bold;
-    }
-
-    .item-title {
-        margin: 5px 0 0 0;
-        font-size: 1.2rem;
-        line-height: 1.2;
-        color: var(--ink);
-        font-family: 'MedievalSharp', cursive;
     }
 
     .card-body { padding: 15px; }
