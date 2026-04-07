@@ -9,7 +9,7 @@ The **Masterwork Crafting Ledger** provides a centralized database of elite craf
 ### Key Features
 * **Class-Specific Filtering:** Instantly narrow down items for Barbarians, Bards, Clerics, Fighters, Paladins, Rangers, Rogues, Warlocks, or Wizards.
 * **Location Tracking:** Every ingredient includes a specific source, such as **Explorer Charts**, **Abyssal Hunt Mods**, or **Master Demonweb Pits**.
-* **Real-Time Search:** Dynamic filtering by item name or class as you type.
+* **Real-Time Search:** Dynamic filtering by item name, class, ingredient, and location as you type.
 * **Immersive UI:** A thematic design featuring gold-bordered parchment, medieval typography, and class-coded badges.
 
 ## 🛠️ Technical Breakdown
