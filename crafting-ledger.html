@@ -56,22 +56,22 @@
     }
 
     h1 {
-    font-family: 'Cinzel', serif; /* Changed from MedievalSharp */
-    font-size: 2.2rem; /* Adjusted slightly as Cinzel is wider */
-    color: var(--crimson); 
-    margin: 0 auto;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-}
+        font-family: 'Cinzel', serif;
+        font-size: 2.2rem;
+        color: var(--crimson); 
+        margin: 0 auto;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
 
-.item-title {
-    margin: 5px 0 0 0;
-    font-size: 1.1rem; /* Slightly smaller for better fit */
-    line-height: 1.3;
-    color: var(--ink);
-    font-family: 'Cinzel', serif; /* Changed from MedievalSharp */
-    font-weight: 700;
-}
+    .item-title {
+        margin: 5px 0 0 0;
+        font-size: 1.1rem;
+        line-height: 1.3;
+        color: var(--ink);
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+    }
 
     .credits {
         font-style: italic;
@@ -101,35 +101,14 @@
         font-family: 'Lora', serif;
     }
 
-    /* MOBILE OPTIMIZATIONS */
     @media (max-width: 600px) {
         .ledger-container { padding: 0 10px 20px 10px; }
-        
-        .sticky-header { 
-            padding-top: 10px; 
-            margin-bottom: 15px; 
-        }
-
+        .sticky-header { padding-top: 10px; margin-bottom: 15px; }
         h1 { font-size: 1.5rem; }
-
         .credits { display: none; }
-
-        .controls { 
-            grid-template-columns: 1fr 1fr; 
-            gap: 6px;
-            padding-bottom: 10px;
-        }
-
-        input, select {
-            padding: 8px 5px;
-            font-size: 0.85rem;
-        }
-
-        /* The fix for your placeholder text */
-        #searchInput::placeholder {
-            font-size: 0.75rem;
-            letter-spacing: -0.5px;
-        }
+        .controls { grid-template-columns: 1fr 1fr; gap: 6px; padding-bottom: 10px; }
+        input, select { padding: 8px 5px; font-size: 0.85rem; }
+        #searchInput::placeholder { font-size: 0.75rem; letter-spacing: -0.5px; }
     }
 
     .items-grid {
@@ -244,9 +223,7 @@
         opacity: 0.8;
     }
 
-    footer strong {
-        color: var(--crimson);
-    }
+    footer strong { color: var(--crimson); }
 
 </style>
 </head>
@@ -264,7 +241,7 @@
 
         <div class="controls">
             <div class="search-wrapper">
-                <input type="text" id="searchInput" placeholder="Search item/class..." onkeyup="filterData()">
+                <input type="text" id="searchInput" placeholder="Search item, material, or location..." onkeyup="filterData()">
             </div>
             <div class="filter-wrapper">
                 <select id="classFilter" onchange="filterData()">
@@ -586,73 +563,100 @@
 ];
 
     function getColorClass(resourceName) {
-    const name = resourceName.toLowerCase();
-    
-    if (name.includes("druegarsteel") || 
-        name.includes("fallen god") || 
-        name.includes("abyssal crystal") || 
-        name.includes("menzoberranzan faerzress") || 
-        name.includes("mushroom droplet") || 
-        name.includes("perfect marilith")) {
-        return 'color-orange';
+        const name = resourceName.toLowerCase();
+        if (name.includes("druegarsteel") || name.includes("fallen god") || name.includes("abyssal crystal") || name.includes("menzoberranzan faerzress") || name.includes("mushroom droplet") || name.includes("perfect marilith")) return 'color-orange';
+        if (name.includes("calcified webbing") || name.includes("demonweb faerzress") || name.includes("faerzress rock") || name.includes("mushroom log") || name.includes("shroomsap spores") || name.includes("fungal moss") || name.includes("fluorescent flora") || name.includes("goristro hide") || name.includes("luminescent darklake")) return 'color-purple';
+        if (name.includes("terebinth")) return 'color-blue';
+        return ''; 
     }
-    
-    if (name.includes("calcified webbing") || 
-        name.includes("demonweb faerzress") || 
-        name.includes("faerzress rock") || 
-        name.includes("mushroom log") || 
-        name.includes("shroomsap spores") || 
-        name.includes("fungal moss") || 
-        name.includes("fluorescent flora") || 
-        name.includes("goristro hide") || 
-        name.includes("luminescent darklake")) {
-        return 'color-purple';
-    }
-    
-    if (name.includes("terebinth")) return 'color-blue';
-    
-    return ''; 
+
+    function renderMaterialList(filteredData, searchVal) {
+    const grid = document.getElementById('itemsGrid');
+    const materialsMap = new Map();
+
+    // Standardize the search value to handle different apostrophes
+    const cleanSearch = searchVal.replace(/[\u2018\u2019]/g, "'").toLowerCase();
+
+    filteredData.forEach(item => {
+        item.ingredients.forEach(ing => {
+            const parts = ing.resource.split(' ');
+            parts.shift(); // remove qty
+            
+            // SANITIZE: Replace smart quotes with straight quotes for consistent mapping
+            const name = parts.join(' ').replace(/[\u2018\u2019]/g, "'");
+            const location = ing.location.replace(/[\u2018\u2019]/g, "'");
+
+            const uniqueKey = `${name}-${location}`.toLowerCase();
+
+            if (name.toLowerCase().includes(cleanSearch) || location.toLowerCase().includes(cleanSearch)) {
+                if (!materialsMap.has(uniqueKey)) {
+                    materialsMap.set(uniqueKey, { name, location });
+                }
+            }
+        });
+    });
+
+    if (materialsMap.size === 0) return;
+
+    const summaryDiv = document.createElement('div');
+    summaryDiv.style.gridColumn = "1 / -1";
+    summaryDiv.style.marginBottom = "20px";
+    summaryDiv.innerHTML = `
+        <div style="background: var(--gold); color: white; padding: 10px 20px; font-family: 'Cinzel'; border-radius: 8px 8px 0 0;">
+            Material & Location Search Results
+        </div>
+        <div style="background: white; border: 2px solid var(--gold); padding: 15px; border-radius: 0 0 8px 8px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+                <thead>
+                    <tr style="text-align: left; border-bottom: 2px solid var(--parchment);">
+                        <th style="padding: 8px;">Material</th>
+                        <th style="padding: 8px;">Primary Source</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${Array.from(materialsMap.values()).map(item => `
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td class="name ${getColorClass(item.name)}" style="padding: 8px;">${item.name}</td>
+                            <td style="padding: 8px; font-style: italic;">${item.location}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+        <h3 style="font-family: 'Cinzel'; margin-top: 30px; color: var(--ink);">Related Crafting Recipes:</h3>
+    `;
+    grid.prepend(summaryDiv);
 }
 	
-	function renderTable(data) {
+    function renderTable(data) {
         const grid = document.getElementById('itemsGrid');
         grid.innerHTML = '';
 
         data.forEach(entry => {
             const card = document.createElement('div');
             card.className = 'item-card';
-            
-            const badgesHtml = entry.classes.map(cls => 
-                `<span class="class-badge">${cls}</span>`
-            ).join('');
-
+            const badgesHtml = entry.classes.map(cls => `<span class="class-badge">${cls}</span>`).join('');
             const ingredientHtml = entry.ingredients.map(ing => {
-				const parts = ing.resource.split(' ');
-				const qty = parts.shift();
-				const name = parts.join(' ');
-				const colorClass = getColorClass(name);
-
-				return `
-					<div class="ingredient-row">
-						<div class="qty-name-group">
-							<span class="qty">${qty}</span>
-							<span class="name ${colorClass}">${name}</span>
-						</div>
-						<div class="location-text">Source: <strong>${ing.location}</strong></div>
-					</div>`;
-			}).join('');
+                const parts = ing.resource.split(' ');
+                const qty = parts.shift();
+                const name = parts.join(' ');
+                const colorClass = getColorClass(name);
+                return `
+                    <div class="ingredient-row">
+                        <div class="qty-name-group">
+                            <span class="qty">${qty}</span>
+                            <span class="name ${colorClass}">${name}</span>
+                        </div>
+                        <div class="location-text">Source: <strong>${ing.location}</strong></div>
+                    </div>`;
+            }).join('');
 
             card.innerHTML = `
                 <div class="card-header">
-                    <div class="badge-container">
-                        ${badgesHtml}
-                    </div>
+                    <div class="badge-container">${badgesHtml}</div>
                     <h2 class="item-title">${entry.item}</h2>
                 </div>
-                <div class="card-body">
-                    <div class="ingredient-list">${ingredientHtml}</div>
-                </div>`;
-            
+                <div class="card-body"><div class="ingredient-list">${ingredientHtml}</div></div>`;
             grid.appendChild(card);
         });
     }
@@ -662,12 +666,20 @@
         const classVal = document.getElementById('classFilter').value;
         
         const filtered = craftingData.filter(d => {
-            const matchesSearch = d.item.toLowerCase().includes(searchVal) || 
+            const matchesBasic = d.item.toLowerCase().includes(searchVal) || 
                                  d.classes.some(cls => cls.toLowerCase().includes(searchVal));
+            const matchesIngredients = d.ingredients.some(ing => 
+                ing.resource.toLowerCase().includes(searchVal) || 
+                ing.location.toLowerCase().includes(searchVal)
+            );
             const matchesClass = (classVal === "All" || d.classes.includes(classVal));
-            return matchesSearch && matchesClass;
+            return (matchesBasic || matchesIngredients) && matchesClass;
         });
+
         renderTable(filtered);
+        if (searchVal.length > 0) {
+            renderMaterialList(filtered, searchVal);
+        }
     }
 
     renderTable(craftingData);
