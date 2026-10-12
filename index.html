@@ -1,298 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synergy - Masterwork Crafting Ledger</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@700&display=swap" rel="stylesheet">
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101923">
+  <meta name="description" content="A Neverwinter masterwork farming guide from the Synergy guild. Find crafting materials by source and recipe.">
+  <title>The Masterwork Forge | Synergy • Neverwinter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=MedievalSharp&display=swap" rel="stylesheet">
+  <style>
     :root {
-        --parchment: #fcf5e5;
-        --ink: #1a140f;
-        --gold: #b08d44;
-        --crimson: #8b0000;
-        --card-bg: #ffffff;
+      color-scheme: dark;
+      --night: #0b1118;
+      --stone: #121c27;
+      --panel: #172432;
+      --panel-raised: #1d2c3b;
+      --line: rgba(211, 176, 104, .28);
+      --gold: #d2ad68;
+      --gold-bright: #f0d18d;
+      --text: #f2eee5;
+      --muted: #aab4be;
+      --teal: #78bdc2;
+      --red: #bd6b65;
+      --serif: 'Cinzel', Georgia, serif;
+      --body: 'Inter', Arial, sans-serif;
     }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-        background-color: #121212;
-        margin: 0;
-        padding: 0;
-        font-family: 'Lora', serif;
-        display: flex;
-        justify-content: center; 
-        align-items: flex-start;
-        min-height: 100vh;
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font: 15px/1.55 var(--body);
+      background:
+        radial-gradient(ellipse at 50% -10%, rgba(52, 82, 106, .48), transparent 46rem),
+        radial-gradient(ellipse at 8% 45%, rgba(27, 54, 67, .25), transparent 33rem),
+        var(--night);
     }
-
-    .ledger-container {
-        max-width: 1200px;
-        width: 100%;
-        background-color: var(--parchment);
-        background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-        border-left: 4px solid var(--gold);
-        border-right: 4px solid var(--gold);
-        padding: 0 30px 30px 30px;
-        box-sizing: border-box;
-        box-shadow: 0 0 50px rgba(0,0,0,0.5);
-        min-height: 100vh;
+    a { color: inherit; }
+    .site-shell { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
+    .masthead { padding: 28px 0 0; }
+    .guild-line { display:flex; align-items:center; justify-content:center; gap:12px; color:var(--gold); font-size:.72rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; }
+    .guild-line::before,.guild-line::after { content:""; width:54px; height:1px; background:linear-gradient(90deg,transparent,var(--gold)); }
+    .guild-line::after { transform:scaleX(-1); }
+    .hero {
+      position:relative; overflow:hidden; margin:20px 0 0; padding:48px 24px 38px;
+      text-align:center; border:1px solid var(--line); border-bottom:2px solid var(--gold);
+      background:linear-gradient(135deg, rgba(33,49,64,.96), rgba(15,25,36,.98) 64%, rgba(24,40,51,.97));
+      box-shadow:0 18px 45px rgba(0,0,0,.24), inset 0 1px rgba(255,255,255,.035);
     }
-
-    .sticky-header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background-color: var(--parchment);
-        background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-        padding-top: 30px;
-        border-bottom: 3px double var(--gold);
-        margin-bottom: 30px;
-        box-shadow: 0 10px 20px -10px rgba(0,0,0,0.15);
+    .hero::before,.hero::after { content:"✦"; position:absolute; top:50%; color:rgba(210,173,104,.19); font-size:130px; transform:translateY(-50%); line-height:1; }
+    .hero::before { left:3%; } .hero::after { right:3%; }
+    .hero-mark { position:relative; z-index:1; display:grid; place-items:center; width:50px; height:50px; margin:0 auto 14px; border:1px solid var(--gold); transform:rotate(45deg); color:var(--gold-bright); background:rgba(210,173,104,.07); }
+    .hero-mark span { transform:rotate(-45deg); font-size:24px; }
+    .eyebrow { position:relative; z-index:1; margin:0 0 7px; color:var(--teal); font-size:.72rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { position:relative; z-index:1; margin:0; color:var(--gold-bright); font:700 clamp(2rem,5vw,3.15rem)/1.13 var(--serif); letter-spacing:.035em; text-shadow:0 3px 18px rgba(0,0,0,.5); }
+    .hero-subtitle { position:relative; z-index:1; margin:12px 0 0; color:#d3d9df; font:italic 1.02rem/1.6 'Lora', Georgia, serif; }
+    .credits { position:relative; z-index:1; margin:15px 0 0; color:var(--muted); font-size:.83rem; }
+    .credits a { color:var(--gold-bright); text-decoration:none; font-weight:700; }
+    .credits a:hover { text-decoration:underline; }
+    .quick-stats { display:flex; justify-content:center; gap:0; margin:22px auto 0; padding:0; list-style:none; }
+    .quick-stats li { min-width:130px; padding:0 22px; border-right:1px solid var(--line); color:var(--muted); font-size:.73rem; letter-spacing:.08em; text-transform:uppercase; }
+    .quick-stats li:last-child { border:0; }
+    .quick-stats strong { display:block; color:var(--text); font:600 1.1rem var(--serif); letter-spacing:0; }
+    .page-nav { display:flex; justify-content:center; gap:10px; padding:16px 0 4px; }
+    .page-nav a { padding:8px 14px; color:#c6ced5; border:1px solid transparent; border-radius:3px; text-decoration:none; font-size:.8rem; font-weight:600; }
+    .page-nav a:hover,.page-nav a:focus-visible { color:var(--gold-bright); border-color:var(--line); background:rgba(255,255,255,.03); }
+    main { padding:26px 0 50px; }
+    .section-heading { display:flex; align-items:end; justify-content:space-between; gap:18px; margin:0 0 15px; }
+    .section-kicker { margin:0 0 3px; color:var(--teal); font-size:.69rem; letter-spacing:.19em; text-transform:uppercase; font-weight:700; }
+    h2 { margin:0; color:var(--gold-bright); font:600 clamp(1.35rem,3vw,1.75rem)/1.25 var(--serif); }
+    .section-intro { max-width:520px; margin:7px 0 0; color:var(--muted); font-size:.88rem; }
+    .route-section { padding:25px; border:1px solid var(--line); background:linear-gradient(140deg,rgba(24,37,50,.96),rgba(16,26,37,.92)); box-shadow:0 12px 34px rgba(0,0,0,.13); }
+    .route-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:11px; margin-top:20px; }
+    .route-button { display:flex; min-height:83px; align-items:center; gap:13px; width:100%; padding:13px 14px; text-align:left; color:var(--text); border:1px solid rgba(201,211,220,.12); border-radius:4px; background:linear-gradient(145deg,rgba(35,52,67,.86),rgba(24,37,50,.86)); cursor:pointer; transition:border-color .18s,background .18s,transform .18s; }
+    .route-button:hover { transform:translateY(-2px); border-color:rgba(210,173,104,.65); }
+    .route-button[aria-pressed="true"] { border-color:var(--gold); background:linear-gradient(145deg,rgba(82,68,44,.52),rgba(34,47,57,.95)); box-shadow:inset 0 0 0 1px rgba(210,173,104,.12); }
+    .route-icon { flex:0 0 38px; display:grid; place-items:center; width:38px; height:38px; color:var(--gold-bright); border:1px solid var(--line); border-radius:50%; font-size:17px; background:rgba(210,173,104,.06); }
+    .route-copy { min-width:0; }
+    .route-name { display:block; color:#f2eee5; font-size:.84rem; font-weight:700; line-height:1.35; }
+    .route-meta { display:block; margin-top:4px; color:var(--muted); font-size:.72rem; }
+    .route-hint { margin:13px 0 0; color:#8f9ba6; font-size:.76rem; }
+    .route-hint span { color:var(--gold); }
+    .tool-section { margin-top:35px; scroll-margin-top:20px; }
+    .filter-panel { display:grid; grid-template-columns:minmax(220px,1.7fr) minmax(155px,.8fr) minmax(190px,1fr); gap:12px; margin:18px 0 14px; padding:14px; border:1px solid var(--line); background:rgba(19,30,42,.92); }
+    .field label { display:block; margin:0 0 6px; color:#c2ccd4; font-size:.7rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
+    .field input,.field select { width:100%; min-height:44px; padding:10px 12px; color:var(--text); border:1px solid rgba(194,207,218,.24); border-radius:3px; outline:none; background:#101a24; font:inherit; }
+    .field input::placeholder { color:#7e8b96; }
+    .field input:focus,.field select:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(210,173,104,.13); }
+    select option { background:#101a24; }
+    .result-bar { display:flex; align-items:center; justify-content:space-between; min-height:32px; margin:0 0 12px; color:var(--muted); font-size:.8rem; }
+    .result-bar strong { color:var(--gold-bright); }
+    .clear-button { padding:5px 9px; color:var(--gold-bright); border:1px solid var(--line); border-radius:3px; background:transparent; font:600 .75rem var(--body); cursor:pointer; }
+    .clear-button:hover { background:rgba(210,173,104,.1); }
+    .items-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr)); gap:14px; }
+    .item-card { overflow:hidden; border:1px solid rgba(210,173,104,.27); border-radius:4px; background:linear-gradient(155deg,#1c2b39,#14212d); box-shadow:0 8px 22px rgba(0,0,0,.14); }
+    .card-header { position:relative; padding:15px 17px 14px; border-bottom:1px solid var(--line); background:linear-gradient(110deg,rgba(65,58,43,.4),rgba(24,39,52,.35)); }
+    .card-header::after { content:""; position:absolute; top:0; right:0; width:44px; height:44px; border-top:1px solid rgba(210,173,104,.35); border-right:1px solid rgba(210,173,104,.35); }
+    .badge-container { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:9px; }
+    .class-badge { padding:3px 7px; color:#b5c6d0; border:1px solid rgba(120,189,194,.28); border-radius:2px; background:rgba(120,189,194,.07); font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+    .item-title { max-width:90%; margin:0; color:var(--gold-bright); font:600 1.02rem/1.35 var(--serif); }
+    .card-body { padding:6px 17px 12px; }
+    .ingredient-row { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid rgba(190,204,215,.09); }
+    .ingredient-row:last-child { border-bottom:0; }
+    .qty { flex:0 0 auto; min-width:36px; padding:3px 6px; color:#13202b; border-radius:2px; background:var(--gold); text-align:center; font-size:.74rem; font-weight:800; }
+    .ingredient-info { min-width:0; }
+    .name { display:block; color:#eff1ed; font-size:.84rem; font-weight:600; }
+    .location-text { margin-top:3px; color:#9eabb5; font-size:.72rem; }
+    .location-text strong { color:var(--teal); font-weight:600; }
+    .color-orange { color:#efad70; } .color-purple { color:#c39ae2; } .color-blue { color:#87bce8; }
+    .empty-state { grid-column:1/-1; padding:30px; border:1px dashed var(--line); color:var(--muted); text-align:center; }
+    .empty-state strong { display:block; margin-bottom:5px; color:var(--gold-bright); font:600 1.1rem var(--serif); }
+    footer { padding:24px 0 30px; color:#8f9ba6; border-top:1px solid var(--line); text-align:center; font-size:.78rem; }
+    footer p { margin:4px 0; }
+    footer strong { color:var(--gold-bright); }
+    :focus-visible { outline:2px solid var(--gold-bright); outline-offset:3px; }
+    @media (max-width:720px) {
+      .site-shell { width:min(100% - 22px,1180px); }
+      .masthead { padding-top:17px; }
+      .hero { margin-top:14px; padding:34px 15px 28px; }
+      .hero::before { left:-8%; } .hero::after { right:-8%; }
+      .hero::before,.hero::after { font-size:90px; }
+      .quick-stats li { min-width:0; flex:1; padding:0 10px; font-size:.62rem; }
+      .quick-stats strong { font-size:.95rem; }
+      .route-section { padding:18px 14px; }
+      .route-grid { grid-template-columns:repeat(auto-fit,minmax(185px,1fr)); }
+      .filter-panel { grid-template-columns:1fr 1fr; }
+      .field:first-child { grid-column:1/-1; }
+      .section-heading { align-items:start; flex-direction:column; gap:3px; }
     }
-
-    .header-section {
-        text-align: center;
-        margin-bottom: 20px;
+    @media (max-width:430px) {
+      .guild-line { gap:7px; font-size:.61rem; letter-spacing:.15em; }
+      .guild-line::before,.guild-line::after { width:27px; }
+      .hero-subtitle { font-size:.9rem; }
+      .credits { font-size:.75rem; }
+      .page-nav { gap:3px; }
+      .page-nav a { padding:7px 9px; font-size:.73rem; }
+      .route-grid { grid-template-columns:1fr; }
+      .filter-panel { grid-template-columns:1fr; }
+      .field:first-child { grid-column:auto; }
     }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
 
-    h1 {
-        font-family: 'Cinzel', serif;
-        font-size: 2.2rem;
-        color: var(--crimson); 
-        margin: 0 auto;
-        letter-spacing: 3px;
-        text-transform: uppercase;
+    /* Medieval guild ledger finish */
+    :root {
+      --night:#100d0a; --stone:#211913; --panel:#e7d9b9; --panel-raised:#efe3c8;
+      --line:rgba(105,72,35,.42); --gold:#b18a48; --gold-bright:#e5c984;
+      --text:#f1e8d5; --muted:#bcae91; --teal:#557a6c; --red:#762f27;
+      --body:'Lora', Georgia, serif;
     }
-
-    .item-title {
-        margin: 5px 0 0 0;
-        font-size: 1.1rem;
-        line-height: 1.3;
-        color: var(--ink);
-        font-family: 'Cinzel', serif;
-        font-weight: 700;
+    body {
+      background-color:#100d0a;
+      background-image:radial-gradient(ellipse at 50% 0%,rgba(64,48,32,.46),transparent 48rem),
+        repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,transparent 1px 5px),
+        linear-gradient(110deg,#0c0a08,#18120d 48%,#0c0a08);
     }
-
-    .credits {
-        font-style: italic;
-        font-size: 1.1rem;
-        color: var(--ink); 
-        margin: 10px auto 0 auto;
+    .hero {
+      border:3px double #a47c3d;
+      background:linear-gradient(135deg,rgba(42,31,23,.98),rgba(20,17,14,.98) 55%,rgba(48,35,24,.98));
+      box-shadow:0 18px 45px rgba(0,0,0,.38),inset 0 0 0 5px rgba(205,166,94,.055),inset 0 1px rgba(255,255,255,.04);
     }
-
-    .credits strong { color: var(--crimson); }
-
-    .controls {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        padding-bottom: 20px;
-        max-width: 900px;
-        margin: 0 auto;
+    .hero::before,.hero::after { color:rgba(229,201,132,.16); font-size:150px; }
+    .hero-mark { border:2px solid var(--gold); box-shadow:0 0 0 4px rgba(177,138,72,.12),inset 0 0 0 3px rgba(177,138,72,.12); }
+    .hero-mark span { font-family:'MedievalSharp',serif; }
+    .hero-subtitle { color:#e1d2b0; }
+    .page-nav a { font-family:var(--serif); letter-spacing:.04em; }
+    .route-section {
+      color:#34291e; border:4px double #92703e; border-radius:3px;
+      background-color:#e7d9b9;
+      background-image:radial-gradient(ellipse at 12% 10%,rgba(255,255,255,.34),transparent 35%),
+        radial-gradient(ellipse at 90% 85%,rgba(130,89,45,.08),transparent 40%),
+        repeating-linear-gradient(3deg,rgba(88,59,28,.018) 0 1px,transparent 1px 4px);
+      box-shadow:0 12px 34px rgba(0,0,0,.25),inset 0 0 0 4px rgba(255,250,229,.22);
     }
-
-    input, select {
-        width: 100%;
-        padding: 12px;
-        border: 2px solid var(--gold);
-        background: rgba(255,255,255,0.5);
-        font-size: 1rem;
-        box-sizing: border-box;
-        font-family: 'Lora', serif;
+    .section-kicker { color:#6a4330; }
+    .route-section h2,.tool-section h2 { color:#5d2c24; text-shadow:0 1px rgba(255,255,255,.35); }
+    .route-section .section-intro,.tool-section .section-intro { color:#5f5141; }
+    .route-button {
+      color:#34291e; border:1px solid #987749; border-radius:2px;
+      background:linear-gradient(145deg,rgba(246,235,207,.95),rgba(218,198,158,.96));
+      box-shadow:inset 0 1px rgba(255,255,255,.62),0 2px 4px rgba(62,43,24,.12);
     }
-
-    @media (max-width: 600px) {
-        .ledger-container { padding: 0 10px 20px 10px; }
-        .sticky-header { padding-top: 10px; margin-bottom: 15px; }
-        h1 { font-size: 1.5rem; }
-        .credits { display: none; }
-        .controls { grid-template-columns: 1fr 1fr; gap: 6px; padding-bottom: 10px; }
-        input, select { padding: 8px 5px; font-size: 0.85rem; }
-        #searchInput::placeholder { font-size: 0.75rem; letter-spacing: -0.5px; }
+    .route-button:hover { border-color:#6d4825; background:linear-gradient(145deg,#f7eccf,#e3cf9f); }
+    .route-button[aria-pressed="true"] { border:2px solid #8c642d; background:linear-gradient(145deg,#d8c18d,#b99a5e); box-shadow:inset 0 0 0 2px rgba(255,246,216,.35); }
+    .route-icon { color:#73372b; border:1px solid #a6844e; background:rgba(112,66,40,.08); font-family:'MedievalSharp',serif; }
+    .route-name { color:#33271d; font-family:var(--serif); font-size:.77rem; }
+    .route-meta { color:#665744; }
+    .route-hint { color:#5f5141; }
+    .route-hint span { color:#702f25; font-weight:700; }
+    .filter-panel {
+      border:3px double #92703e; border-radius:3px;
+      background-color:#e7d9b9;
+      background-image:repeating-linear-gradient(3deg,rgba(88,59,28,.02) 0 1px,transparent 1px 4px);
+      box-shadow:inset 0 0 0 3px rgba(255,250,229,.18);
     }
-
-    [hidden] { display:none !important; }
-    .view-switch { display:flex; justify-content:center; gap:10px; margin:0 auto 18px; flex-wrap:wrap; }
-    .view-switch button { font-family:'Cinzel',serif; border:2px solid var(--gold); background:#fff8e8; color:var(--ink); padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold; }
-    .view-switch button.active { background:var(--crimson); color:white; border-color:var(--crimson); }
-    .guide-intro { margin:0 0 18px; text-align:center; line-height:1.6; }
-    .guide-controls { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
-    .guide-controls select { max-width:440px; }
-    .source-card { background:white; border:1px solid var(--gold); border-radius:8px; margin-bottom:18px; overflow:hidden; }
-    .source-card h2 { background:#f4ebd0; border-bottom:2px solid var(--gold); margin:0; padding:14px 18px; font-family:'Cinzel',serif; color:var(--crimson); font-size:1.1rem; }
-    .source-card .source-body { padding:10px 18px; }
-    .material-entry { padding:12px 0; border-bottom:1px solid #e7dbc4; }
-    .material-entry:last-child { border-bottom:0; }
-    .material-entry strong { font-size:1rem; }
-    .material-entry small { display:block; color:#555; margin-top:5px; line-height:1.5; }
-    .guide-empty { text-align:center; padding:30px; background:white; border:1px solid var(--gold); }
-    .items-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-    }
-
+    .field label { color:#5d3429; font-family:var(--serif); letter-spacing:.08em; }
+    .field input,.field select { color:#34291e; border:1px solid #9b7b4a; border-radius:2px; background:#f1e6ca; font-family:'Lora',Georgia,serif; }
+    .field input::placeholder { color:#85745c; }
+    .field input:focus,.field select:focus { border-color:#7b4c2c; box-shadow:0 0 0 3px rgba(143,100,48,.16); }
+    select option { color:#34291e; background:#f1e6ca; }
+    .result-bar { color:#c4b597; }
+    .result-bar strong { color:#f0d895; }
+    .clear-button { color:#f0dfb7; border-color:#a47c3d; border-radius:2px; background:#572d22; font-family:var(--serif); }
+    .clear-button:hover { background:#713c2b; }
     .item-card {
-        background: var(--card-bg);
-        border: 1px solid var(--gold);
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        transition: transform 0.2s;
+      border:3px double #947245; border-radius:2px;
+      background-color:#e8dbbc;
+      background-image:radial-gradient(ellipse at 85% 12%,rgba(255,255,255,.25),transparent 42%),
+        repeating-linear-gradient(2deg,rgba(88,59,28,.018) 0 1px,transparent 1px 4px);
+      box-shadow:0 7px 18px rgba(0,0,0,.24),inset 0 0 0 3px rgba(255,250,229,.18);
     }
-
-    .item-card:hover { transform: translateY(-5px); }
-
-    .badge-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 4px;
-        margin-bottom: 8px;
-    }
-        
     .card-header {
-        background: #f4ebd0;
-        padding: 12px 15px;
-        border-bottom: 2px solid var(--gold);
-        display: flex;
-        flex-direction: column;
+      border-bottom:2px solid #a7834c;
+      background:linear-gradient(100deg,#33251c,#4b3022 54%,#30231b);
+      box-shadow:inset 0 1px rgba(255,255,255,.08);
     }
-
-    .class-badge {
-        background: var(--crimson);
-        color: white;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        font-weight: bold;
+    .card-header::after { border-color:rgba(229,201,132,.56); }
+    .class-badge { color:#e8d8ae; border-color:rgba(209,185,126,.45); border-radius:2px; background:rgba(91,118,87,.28); font-family:var(--serif); }
+    .item-title { color:#f0d895; text-shadow:0 1px 2px #1b120c; }
+    .card-body { padding-top:8px; }
+    .ingredient-row { border-bottom-color:rgba(91,65,36,.17); }
+    .qty { color:#f9efd8; border:1px solid #86602f; border-radius:2px; background:linear-gradient(#9a6c35,#79502d); font-family:var(--serif); }
+    .name { color:#33271d; font-family:'Lora',Georgia,serif; }
+    .location-text { color:#6d5a43; }
+    .location-text strong { color:#3f6551; }
+    .color-orange { color:#e67e22; font-weight:800; } .color-purple { color:#8e44ad; font-weight:700; } .color-blue { color:#0070dd; font-weight:700; }
+    .empty-state { color:#665744; border-color:#987749; background:#e7d9b9; }
+    .empty-state strong { color:#5d2c24; }
+    footer { color:#bcae91; border-color:rgba(177,138,72,.45); }
+    .tool-section > .section-heading {
+      padding:20px 24px;
+      border:4px double #92703e;
+      border-radius:3px;
+      background-color:#e7d9b9;
+      background-image:radial-gradient(ellipse at 12% 10%,rgba(255,255,255,.38),transparent 38%),
+        radial-gradient(ellipse at 90% 90%,rgba(130,89,45,.07),transparent 42%),
+        repeating-linear-gradient(3deg,rgba(88,59,28,.018) 0 1px,transparent 1px 4px);
+      box-shadow:0 8px 20px rgba(0,0,0,.2),inset 0 0 0 4px rgba(255,250,229,.2);
     }
-
-    .card-body { padding: 15px; }
-
-    .ingredient-row {
-        display: flex;
-        flex-direction: column;
-        padding: 10px 0;
-        border-bottom: 1px solid rgba(176, 141, 68, 0.2);
+    .tool-section > .section-heading .section-kicker { color:#6a4330; }
+    .tool-section > .section-heading h2 { color:#5d2c24; }
+    .tool-section > .section-heading .section-intro { color:#5f5141; }
+    .tool-section > .section-heading {
+      margin-bottom:0;
+      border-width:3px;
+      border-bottom:0;
+      border-radius:3px 3px 0 0;
+      background-image:radial-gradient(ellipse at 12% 10%,rgba(255,255,255,.38),transparent 38%),
+        radial-gradient(ellipse at 90% 90%,rgba(130,89,45,.07),transparent 42%),
+        repeating-linear-gradient(3deg,rgba(88,59,28,.018) 0 1px,transparent 1px 4px);
+      box-shadow:0 8px 20px rgba(0,0,0,.2),inset 0 0 0 3px rgba(255,250,229,.2);
     }
-
-    .qty-name-group {
-        display: flex;
-        align-items: center;
-        margin-bottom: 4px;
+    .tool-section .filter-panel {
+      margin:0;
+      border-top:0;
+      border-radius:0 0 3px 3px;
+      background-color:#e7d9b9;
+      background-image:radial-gradient(ellipse at 12% 10%,rgba(255,255,255,.38),transparent 38%),
+        radial-gradient(ellipse at 90% 90%,rgba(130,89,45,.07),transparent 42%),
+        repeating-linear-gradient(3deg,rgba(88,59,28,.018) 0 1px,transparent 1px 4px);
+      box-shadow:0 8px 20px rgba(0,0,0,.2),inset 0 0 0 3px rgba(255,250,229,.2);
     }
-
-    .qty {
-        background: #eee;
-        color: var(--crimson);
-        font-weight: bold;
-        padding: 2px 6px;
-        border-radius: 4px;
-        margin-right: 10px;
-        min-width: 35px;
-        text-align: center;
-        font-size: 0.9rem;
-    }
-
-    .name { 
-        font-size: 0.95rem; 
-        font-weight: 700;
-        color: var(--ink);
-    }
-
-    .location-text {
-        font-size: 0.8rem;
-        color: #666;
-        padding-left: 45px;
-        font-style: italic;
-    }
-
-    .location-text strong { color: var(--gold); }
-
-    .discord-link {
-        color: #5865F2;
-        text-decoration: none;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-
-    .discord-link:hover {
-        color: var(--crimson);
-        text-decoration: underline;
-    }
-	
-	.color-orange { color: #e67e22; font-weight: 800; } 
-	.color-purple { color: #8e44ad; font-weight: 700; } 
-	.color-blue { color: #0070dd; font-weight: 700; }
-
-    footer {
-        text-align: center;
-        padding: 40px 0 20px 0;
-        border-top: 1px solid rgba(176, 141, 68, 0.3);
-        margin-top: 40px;
-        font-size: 0.9rem;
-        color: var(--ink);
-        opacity: 0.8;
-    }
-
-    footer strong { color: var(--crimson); }
-
-</style>
+  </style>
 </head>
 <body>
+  <div class="site-shell">
+    <header class="masthead">
+      <div class="guild-line">Synergy Guild <span>•</span> Neverwinter</div>
+      <div class="hero">
+        <div class="hero-mark" aria-hidden="true"><span>✦</span></div>
+        <p class="eyebrow">A masterwork farming guide</p>
+        <h1>The Masterwork Forge</h1>
+        <p class="hero-subtitle">Know the route. Gather the rarest materials. Craft with purpose.</p>
+        <p class="credits">A community guide from <a href="https://discord.gg/ZAEfYwdjc8" target="_blank" rel="noopener noreferrer">Synergy</a><br>Material research by <strong>Ivydora</strong> &amp; <strong>Asura</strong></p>
+        <ul class="quick-stats" aria-label="Guide contents">
+          <li><strong id="recipeCount">—</strong> recipes</li>
+          <li><strong id="routeCount">—</strong> farming routes</li>
+          <li><strong>9</strong> classes</li>
+        </ul>
+      </div>
+      <nav class="page-nav" aria-label="Page sections">
+        <a href="#routes">Farming Routes</a>
+        <a href="#recipes">Recipes &amp; Sources</a>
+      </nav>
+    </header>
 
-<div class="ledger-container">
-    <div class="sticky-header">
-        <div class="header-section">
-            <h1>Masterwork Crafting Ledger</h1>
-            <p class="credits">
-                Created by the <strong><a href="https://discord.gg/ZAEfYwdjc8" target="_blank" class="discord-link">Synergy</a></strong> Guild &bull; Neverwinter<br>
-                <span>Data compiled by <strong>Ivydora</strong> & <strong>Asura</strong></span>
-            </p>
+    <main>
+      <section class="route-section" id="routes" aria-labelledby="routesTitle">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Plan your next run</p>
+            <h2 id="routesTitle">Choose a farming route</h2>
+            <p class="section-intro">Select an activity to see which recipe materials it can provide. Select it again to clear the route.</p>
+          </div>
         </div>
+        <div id="routeGrid" class="route-grid" aria-label="Available farming routes"></div>
+        <p class="route-hint"><span>Tip:</span> You can also search for a material or filter recipes by class below.</p>
+      </section>
 
-        <div class="controls">
-            <div class="search-wrapper">
-                <input type="text" id="searchInput" placeholder="Search item, material, or location..." onkeyup="filterData()">
-            </div>
-            <div class="filter-wrapper">
-                <select id="classFilter" onchange="filterData()">
-                    <option value="All">All Classes</option>
-                    <option value="Barbarian">Barbarian</option>
-                    <option value="Bard">Bard</option>
-                    <option value="Cleric">Cleric</option>
-                    <option value="Fighter">Fighter</option>
-                    <option value="Paladin">Paladin</option>
-                    <option value="Ranger">Ranger</option>
-                    <option value="Rogue">Rogue</option>
-                    <option value="Warlock">Warlock</option>
-                    <option value="Wizard">Wizard</option>
-                </select>
-            </div>
+      <section class="tool-section" id="recipes" aria-labelledby="recipesTitle">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Materials and recipes</p>
+            <h2 id="recipesTitle">The field guide</h2>
+            <p class="section-intro">Browse every verified recipe, or narrow the list to one class, source, or material.</p>
+          </div>
         </div>
-    </div>
-    
-    <nav class="view-switch" aria-label="Ledger views">
-        <button type="button" id="recipesTab" class="active" aria-pressed="true" onclick="setView('recipes')">Crafting Recipes</button>
-        <button type="button" id="farmingTab" aria-pressed="false" onclick="setView('farming')">Farming Guide</button>
-    </nav>
-    <div id="itemsGrid" class="items-grid"></div>
-    <section id="farmingGuide" hidden aria-label="Farming guide">
-        <p class="guide-intro">Find where to obtain crafting materials and which recipes need them. The class filter and search above apply to this guide too.</p>
-        <div class="guide-controls"><select id="sourceFilter" aria-label="Filter farming location" onchange="filterData()"><option value="All">All Farming Locations</option></select></div>
-        <div id="farmingResults"></div>
-    </section>
+        <div class="filter-panel" role="search">
+          <div class="field">
+            <label for="searchInput">Search</label>
+            <input type="search" id="searchInput" placeholder="Item, material, or activity…" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="classFilter">Class</label>
+            <select id="classFilter">
+              <option value="All">All Classes</option>
+              <option>Barbarian</option><option>Bard</option><option>Cleric</option><option>Fighter</option>
+              <option>Paladin</option><option>Ranger</option><option>Rogue</option><option>Warlock</option><option>Wizard</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sourceFilter">Farming source</label>
+            <select id="sourceFilter"><option value="All">All Sources</option></select>
+          </div>
+        </div>
+        <div class="result-bar" aria-live="polite">
+          <span id="resultCount">Showing recipes</span>
+          <button class="clear-button" id="clearFilters" type="button">Clear filters</button>
+        </div>
+        <div id="itemsGrid" class="items-grid"></div>
+      </section>
+    </main>
 
     <footer>
-        <p>Document maintained and provided by the <strong>Synergy</strong> Guild &bull; 2026</p>
-        <p><em>Always verify recipe costs in-game before final processing.</em></p>
+      <p>Maintained by the <strong>Synergy</strong> Guild • Neverwinter • 2026</p>
+      <p>Always verify recipe costs and material sources in-game before final processing.</p>
     </footer>
-</div>
-
-<script>
+  </div>
+  <script>
     const craftingData = [
   // --- CONSOLIDATED SHARED SETS ---
   {
@@ -586,174 +633,122 @@
   }
 ];
 
-    let currentView = 'recipes';
-    const normalizeText = value => value.replace(/[\u2018\u2019]/g, "'").toLowerCase().trim();
-    const parseResource = resource => {
-        const match = resource.match(/^(\d+)x\s+(.+)$/i);
-        return match ? { quantity: Number(match[1]), name: match[2] } : { quantity: 0, name: resource };
+    const routeSymbols = {
+      "Master Demonweb Pits": "⚔",
+      "Abyssal Hunt Mod: Tricky Reversal": "✧",
+      "Abyssal Hunt Mod: Itty Bitty": "❋",
+      "Advanced Demonweb Pits": "⌖",
+      "Demonweb Pits Campaign Store": "♜",
+      "Explorer Chart: Menzoberranzan": "⌕",
+      "Explorer Chart: Narbondellyn": "⌁",
+      "Stronghold Vendor": "♙"
     };
-    const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 
-    function setView(view) {
-        currentView = view;
-        document.getElementById('itemsGrid').hidden = view !== 'recipes';
-        document.getElementById('farmingGuide').hidden = view !== 'farming';
-        for (const [name, id] of [['recipes','recipesTab'], ['farming','farmingTab']]) {
-            const active = view === name;
-            document.getElementById(id).classList.toggle('active', active);
-            document.getElementById(id).setAttribute('aria-pressed', String(active));
-        }
-        filterData();
-    }
+    const routeNames = [...new Set(craftingData.flatMap(recipe => recipe.ingredients.map(item => item.location)))].sort((a, b) => a.localeCompare(b));
+    let activeRoute = "All";
 
-    function renderFarmingGuide(classFiltered, searchVal) {
-        const sources = new Map();
-        classFiltered.forEach(recipe => recipe.ingredients.forEach(ingredient => {
-            const { quantity, name } = parseResource(ingredient.resource);
-            const source = ingredient.location.trim();
-            const sourceKey = normalizeText(source);
-            if (!sources.has(sourceKey)) sources.set(sourceKey, { label:source, materials:new Map() });
-            const group = sources.get(sourceKey);
-            const key = normalizeText(name);
-            if (!group.materials.has(key)) group.materials.set(key, { name, recipes:new Map() });
-            const material = group.materials.get(key);
-            // Quantities are per recipe, not an aggregate farming target.
-            material.recipes.set(recipe.item, quantity);
-        }));
-        const select = document.getElementById('sourceFilter');
-        const selected = select.value;
-        select.innerHTML = '<option value="All">All Farming Locations</option>' + [...sources.entries()]
-            .sort((a,b) => a[1].label.localeCompare(b[1].label))
-            .map(([key,group]) => `<option value="${escapeHtml(key)}">${escapeHtml(group.label)}</option>`).join('');
-        select.value = sources.has(selected) ? selected : 'All';
-        const results = [...sources.entries()].sort((a,b) => a[1].label.localeCompare(b[1].label))
-            .filter(([key]) => select.value === 'All' || key === select.value)
-            .map(([,group]) => {
-                const materials = [...group.materials.values()].sort((a,b) => a.name.localeCompare(b.name))
-                    .filter(m => !searchVal || normalizeText(m.name).includes(searchVal) || normalizeText(group.label).includes(searchVal) || [...m.recipes.keys()].some(name => normalizeText(name).includes(searchVal)));
-                if (!materials.length) return '';
-                return `<article class="source-card"><h2>${escapeHtml(group.label)} (${materials.length} materials)</h2><div class="source-body">${materials.map(m => `<div class="material-entry"><strong class="${getColorClass(m.name)}">${escapeHtml(m.name)}</strong><small>Used in: ${[...m.recipes.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([name,qty]) => `${escapeHtml(name)} (${qty}x)`).join('; ')}</small></div>`).join('')}</div></article>`;
-            }).filter(Boolean);
-        document.getElementById('farmingResults').innerHTML = results.join('') || '<p class="guide-empty">No farming materials match these filters.</p>';
+    function parseIngredient(resource) {
+      const match = resource.match(/^(\d+x)\s+(.+)$/);
+      return match ? { qty: match[1], name: match[2] } : { qty: "", name: resource };
     }
 
     function getColorClass(resourceName) {
-        const name = resourceName.toLowerCase();
-        if (name.includes("druegarsteel") || name.includes("fallen god") || name.includes("abyssal crystal") || name.includes("menzoberranzan faerzress") || name.includes("mushroom droplet") || name.includes("perfect marilith")) return 'color-orange';
-        if (name.includes("calcified webbing") || name.includes("demonweb faerzress") || name.includes("faerzress rock") || name.includes("mushroom log") || name.includes("shroomsap spores") || name.includes("fungal moss") || name.includes("fluorescent flora") || name.includes("goristro hide") || name.includes("luminescent darklake")) return 'color-purple';
-        if (name.includes("terebinth")) return 'color-blue';
-        return ''; 
+      const name = resourceName.toLowerCase();
+      if (name.includes("druegarsteel") || name.includes("fallen god") || name.includes("abyssal crystal") || name.includes("menzoberranzan faerzress") || name.includes("mushroom droplet") || name.includes("perfect marilith")) return "color-orange";
+      if (name.includes("calcified webbing") || name.includes("demonweb faerzress") || name.includes("faerzress rock") || name.includes("mushroom log") || name.includes("shroomsap spores") || name.includes("fungal moss") || name.includes("fluorescent flora") || name.includes("goristro hide") || name.includes("luminescent darklake")) return "color-purple";
+      if (name.includes("terebinth")) return "color-blue";
+      return "";
     }
 
-    function renderMaterialList(filteredData, searchVal) {
-    const grid = document.getElementById('itemsGrid');
-    const materialsMap = new Map();
+    function renderRouteChoices() {
+      const routeGrid = document.getElementById("routeGrid");
+      const sourceFilter = document.getElementById("sourceFilter");
+      routeGrid.innerHTML = "";
+      routeNames.forEach(location => {
+        const materials = new Set();
+        const recipes = new Set();
+        craftingData.forEach(recipe => recipe.ingredients.forEach(ingredient => {
+          if (ingredient.location === location) {
+            materials.add(normalizeSearchText(parseIngredient(ingredient.resource).name));
+            recipes.add(recipe.item);
+          }
+        }));
+        const option = document.createElement("option");
+        option.value = location;
+        option.textContent = location;
+        sourceFilter.appendChild(option);
 
-    // Standardize the search value to handle different apostrophes
-    const cleanSearch = searchVal.replace(/[\u2018\u2019]/g, "'").toLowerCase();
-
-    filteredData.forEach(item => {
-        item.ingredients.forEach(ing => {
-            const parts = ing.resource.split(' ');
-            parts.shift(); // remove qty
-            
-            // SANITIZE: Replace smart quotes with straight quotes for consistent mapping
-            const name = parts.join(' ').replace(/[\u2018\u2019]/g, "'");
-            const location = ing.location.replace(/[\u2018\u2019]/g, "'");
-
-            const uniqueKey = `${name}-${location}`.toLowerCase();
-
-            if (name.toLowerCase().includes(cleanSearch) || location.toLowerCase().includes(cleanSearch)) {
-                if (!materialsMap.has(uniqueKey)) {
-                    materialsMap.set(uniqueKey, { name, location });
-                }
-            }
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "route-button";
+        button.dataset.route = location;
+        button.setAttribute("aria-pressed", "false");
+        const materialLabel = materials.size === 1 ? "material" : "materials";
+        const recipeLabel = recipes.size === 1 ? "recipe" : "recipes";
+        button.innerHTML = `<span class="route-icon" aria-hidden="true">${routeSymbols[location] || "✦"}</span><span class="route-copy"><span class="route-name">${location}</span><span class="route-meta">${materials.size} ${materialLabel} · ${recipes.size} ${recipeLabel}</span></span>`;
+        button.addEventListener("click", () => {
+          activeRoute = activeRoute === location ? "All" : location;
+          sourceFilter.value = activeRoute;
+          filterData();
         });
-    });
+        routeGrid.appendChild(button);
+      });
+      document.getElementById("routeCount").textContent = routeNames.length;
+    }
 
-    if (materialsMap.size === 0) return;
-
-    const summaryDiv = document.createElement('div');
-    summaryDiv.style.gridColumn = "1 / -1";
-    summaryDiv.style.marginBottom = "20px";
-    summaryDiv.innerHTML = `
-        <div style="background: var(--gold); color: white; padding: 10px 20px; font-family: 'Cinzel'; border-radius: 8px 8px 0 0;">
-            Material & Location Search Results
-        </div>
-        <div style="background: white; border: 2px solid var(--gold); padding: 15px; border-radius: 0 0 8px 8px;">
-            <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
-                <thead>
-                    <tr style="text-align: left; border-bottom: 2px solid var(--parchment);">
-                        <th style="padding: 8px;">Material</th>
-                        <th style="padding: 8px;">Primary Source</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${Array.from(materialsMap.values()).map(item => `
-                        <tr style="border-bottom: 1px solid #eee;">
-                            <td class="name ${getColorClass(item.name)}" style="padding: 8px;">${item.name}</td>
-                            <td style="padding: 8px; font-style: italic;">${item.location}</td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        </div>
-        <h3 style="font-family: 'Cinzel'; margin-top: 30px; color: var(--ink);">Related Crafting Recipes:</h3>
-    `;
-    grid.prepend(summaryDiv);
-}
-	
     function renderTable(data) {
-        const grid = document.getElementById('itemsGrid');
-        grid.innerHTML = '';
+      const grid = document.getElementById("itemsGrid");
+      grid.innerHTML = "";
+      if (!data.length) {
+        grid.innerHTML = `<div class="empty-state"><strong>No recipes found</strong>Try another search or clear one of the filters.</div>`;
+        return;
+      }
+      data.forEach(entry => {
+        const card = document.createElement("article");
+        card.className = "item-card";
+        const ingredients = activeRoute === "All" ? entry.ingredients : entry.ingredients.filter(item => item.location === activeRoute);
+        const badgesHtml = entry.classes.map(cls => `<span class="class-badge">${cls}</span>`).join("");
+        const ingredientHtml = ingredients.map(ingredient => {
+          const parsed = parseIngredient(ingredient.resource);
+          return `<div class="ingredient-row"><span class="qty">${parsed.qty}</span><div class="ingredient-info"><span class="name ${getColorClass(parsed.name)}">${parsed.name}</span><div class="location-text">Source: <strong>${ingredient.location}</strong></div></div></div>`;
+        }).join("");
+        card.innerHTML = `<header class="card-header"><div class="badge-container">${badgesHtml}</div><h3 class="item-title">${entry.item}</h3></header><div class="card-body">${ingredientHtml}</div>`;
+        grid.appendChild(card);
+      });
+    }
 
-        data.forEach(entry => {
-            const card = document.createElement('div');
-            card.className = 'item-card';
-            const badgesHtml = entry.classes.map(cls => `<span class="class-badge">${cls}</span>`).join('');
-            const ingredientHtml = entry.ingredients.map(ing => {
-                const parts = ing.resource.split(' ');
-                const qty = parts.shift();
-                const name = parts.join(' ');
-                const colorClass = getColorClass(name);
-                return `
-                    <div class="ingredient-row">
-                        <div class="qty-name-group">
-                            <span class="qty">${qty}</span>
-                            <span class="name ${colorClass}">${name}</span>
-                        </div>
-                        <div class="location-text">Source: <strong>${ing.location}</strong></div>
-                    </div>`;
-            }).join('');
-
-            card.innerHTML = `
-                <div class="card-header">
-                    <div class="badge-container">${badgesHtml}</div>
-                    <h2 class="item-title">${entry.item}</h2>
-                </div>
-                <div class="card-body"><div class="ingredient-list">${ingredientHtml}</div></div>`;
-            grid.appendChild(card);
-        });
+    function normalizeSearchText(value) {
+      return value.toLowerCase().replace(/[\u2018\u2019\u02bc\uff07]/g, "'");
     }
 
     function filterData() {
-        const searchVal = normalizeText(document.getElementById('searchInput').value);
-        const classVal = document.getElementById('classFilter').value;
-        const classFiltered = craftingData.filter(d => classVal === 'All' || d.classes.includes(classVal));
-        if (currentView === 'farming') {
-            renderFarmingGuide(classFiltered, searchVal);
-            return;
-        }
-        const filtered = classFiltered.filter(d =>
-            normalizeText(d.item).includes(searchVal) ||
-            d.classes.some(cls => normalizeText(cls).includes(searchVal)) ||
-            d.ingredients.some(ing => normalizeText(ing.resource).includes(searchVal) || normalizeText(ing.location).includes(searchVal))
-        );
-        renderTable(filtered);
-        if (searchVal.length > 0) renderMaterialList(filtered, searchVal);
+      const searchVal = normalizeSearchText(document.getElementById("searchInput").value.trim());
+      const classVal = document.getElementById("classFilter").value;
+      activeRoute = document.getElementById("sourceFilter").value;
+      const filtered = craftingData.filter(recipe => {
+        const matchesClass = classVal === "All" || recipe.classes.includes(classVal);
+        const matchesRoute = activeRoute === "All" || recipe.ingredients.some(ingredient => ingredient.location === activeRoute);
+        const searchableText = normalizeSearchText([recipe.item, ...recipe.classes, ...recipe.ingredients.flatMap(ingredient => [ingredient.resource, ingredient.location])].join(" "));
+        return matchesClass && matchesRoute && searchableText.includes(searchVal);
+      });
+      renderTable(filtered);
+      document.getElementById("recipeCount").textContent = craftingData.length;
+      document.getElementById("resultCount").innerHTML = `<strong>${filtered.length}</strong> ${filtered.length === 1 ? "recipe" : "recipes"}${activeRoute !== "All" ? ` · showing materials from <strong>${activeRoute}</strong>` : " found"}`;
+      document.querySelectorAll(".route-button").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.route === activeRoute)));
     }
 
-    renderTable(craftingData);
-</script>
+    document.getElementById("searchInput").addEventListener("input", filterData);
+    document.getElementById("classFilter").addEventListener("change", filterData);
+    document.getElementById("sourceFilter").addEventListener("change", filterData);
+    document.getElementById("clearFilters").addEventListener("click", () => {
+      document.getElementById("searchInput").value = "";
+      document.getElementById("classFilter").value = "All";
+      document.getElementById("sourceFilter").value = "All";
+      filterData();
+    });
+
+    renderRouteChoices();
+    filterData();
+  </script>
 </body>
 </html>
