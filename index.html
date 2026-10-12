@@ -111,6 +111,21 @@
         #searchInput::placeholder { font-size: 0.75rem; letter-spacing: -0.5px; }
     }
 
+    [hidden] { display:none !important; }
+    .view-switch { display:flex; justify-content:center; gap:10px; margin:0 auto 18px; flex-wrap:wrap; }
+    .view-switch button { font-family:'Cinzel',serif; border:2px solid var(--gold); background:#fff8e8; color:var(--ink); padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold; }
+    .view-switch button.active { background:var(--crimson); color:white; border-color:var(--crimson); }
+    .guide-intro { margin:0 0 18px; text-align:center; line-height:1.6; }
+    .guide-controls { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
+    .guide-controls select { max-width:440px; }
+    .source-card { background:white; border:1px solid var(--gold); border-radius:8px; margin-bottom:18px; overflow:hidden; }
+    .source-card h2 { background:#f4ebd0; border-bottom:2px solid var(--gold); margin:0; padding:14px 18px; font-family:'Cinzel',serif; color:var(--crimson); font-size:1.1rem; }
+    .source-card .source-body { padding:10px 18px; }
+    .material-entry { padding:12px 0; border-bottom:1px solid #e7dbc4; }
+    .material-entry:last-child { border-bottom:0; }
+    .material-entry strong { font-size:1rem; }
+    .material-entry small { display:block; color:#555; margin-top:5px; line-height:1.5; }
+    .guide-empty { text-align:center; padding:30px; background:white; border:1px solid var(--gold); }
     .items-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -260,7 +275,16 @@
         </div>
     </div>
     
+    <nav class="view-switch" aria-label="Ledger views">
+        <button type="button" id="recipesTab" class="active" aria-pressed="true" onclick="setView('recipes')">Crafting Recipes</button>
+        <button type="button" id="farmingTab" aria-pressed="false" onclick="setView('farming')">Farming Guide</button>
+    </nav>
     <div id="itemsGrid" class="items-grid"></div>
+    <section id="farmingGuide" hidden aria-label="Farming guide">
+        <p class="guide-intro">Find where to obtain crafting materials and which recipes need them. The class filter and search above apply to this guide too.</p>
+        <div class="guide-controls"><select id="sourceFilter" aria-label="Filter farming location" onchange="filterData()"><option value="All">All Farming Locations</option></select></div>
+        <div id="farmingResults"></div>
+    </section>
 
     <footer>
         <p>Document maintained and provided by the <strong>Synergy</strong> Guild &bull; 2026</p>
@@ -562,6 +586,57 @@
   }
 ];
 
+    let currentView = 'recipes';
+    const normalizeText = value => value.replace(/[\u2018\u2019]/g, "'").toLowerCase().trim();
+    const parseResource = resource => {
+        const match = resource.match(/^(\d+)x\s+(.+)$/i);
+        return match ? { quantity: Number(match[1]), name: match[2] } : { quantity: 0, name: resource };
+    };
+    const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+
+    function setView(view) {
+        currentView = view;
+        document.getElementById('itemsGrid').hidden = view !== 'recipes';
+        document.getElementById('farmingGuide').hidden = view !== 'farming';
+        for (const [name, id] of [['recipes','recipesTab'], ['farming','farmingTab']]) {
+            const active = view === name;
+            document.getElementById(id).classList.toggle('active', active);
+            document.getElementById(id).setAttribute('aria-pressed', String(active));
+        }
+        filterData();
+    }
+
+    function renderFarmingGuide(classFiltered, searchVal) {
+        const sources = new Map();
+        classFiltered.forEach(recipe => recipe.ingredients.forEach(ingredient => {
+            const { quantity, name } = parseResource(ingredient.resource);
+            const source = ingredient.location.trim();
+            const sourceKey = normalizeText(source);
+            if (!sources.has(sourceKey)) sources.set(sourceKey, { label:source, materials:new Map() });
+            const group = sources.get(sourceKey);
+            const key = normalizeText(name);
+            if (!group.materials.has(key)) group.materials.set(key, { name, recipes:new Map() });
+            const material = group.materials.get(key);
+            // Quantities are per recipe, not an aggregate farming target.
+            material.recipes.set(recipe.item, quantity);
+        }));
+        const select = document.getElementById('sourceFilter');
+        const selected = select.value;
+        select.innerHTML = '<option value="All">All Farming Locations</option>' + [...sources.entries()]
+            .sort((a,b) => a[1].label.localeCompare(b[1].label))
+            .map(([key,group]) => `<option value="${escapeHtml(key)}">${escapeHtml(group.label)}</option>`).join('');
+        select.value = sources.has(selected) ? selected : 'All';
+        const results = [...sources.entries()].sort((a,b) => a[1].label.localeCompare(b[1].label))
+            .filter(([key]) => select.value === 'All' || key === select.value)
+            .map(([,group]) => {
+                const materials = [...group.materials.values()].sort((a,b) => a.name.localeCompare(b.name))
+                    .filter(m => !searchVal || normalizeText(m.name).includes(searchVal) || normalizeText(group.label).includes(searchVal) || [...m.recipes.keys()].some(name => normalizeText(name).includes(searchVal)));
+                if (!materials.length) return '';
+                return `<article class="source-card"><h2>${escapeHtml(group.label)} (${materials.length} materials)</h2><div class="source-body">${materials.map(m => `<div class="material-entry"><strong class="${getColorClass(m.name)}">${escapeHtml(m.name)}</strong><small>Used in: ${[...m.recipes.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([name,qty]) => `${escapeHtml(name)} (${qty}x)`).join('; ')}</small></div>`).join('')}</div></article>`;
+            }).filter(Boolean);
+        document.getElementById('farmingResults').innerHTML = results.join('') || '<p class="guide-empty">No farming materials match these filters.</p>';
+    }
+
     function getColorClass(resourceName) {
         const name = resourceName.toLowerCase();
         if (name.includes("druegarsteel") || name.includes("fallen god") || name.includes("abyssal crystal") || name.includes("menzoberranzan faerzress") || name.includes("mushroom droplet") || name.includes("perfect marilith")) return 'color-orange';
@@ -662,24 +737,20 @@
     }
 
     function filterData() {
-        const searchVal = document.getElementById('searchInput').value.toLowerCase();
+        const searchVal = normalizeText(document.getElementById('searchInput').value);
         const classVal = document.getElementById('classFilter').value;
-        
-        const filtered = craftingData.filter(d => {
-            const matchesBasic = d.item.toLowerCase().includes(searchVal) || 
-                                 d.classes.some(cls => cls.toLowerCase().includes(searchVal));
-            const matchesIngredients = d.ingredients.some(ing => 
-                ing.resource.toLowerCase().includes(searchVal) || 
-                ing.location.toLowerCase().includes(searchVal)
-            );
-            const matchesClass = (classVal === "All" || d.classes.includes(classVal));
-            return (matchesBasic || matchesIngredients) && matchesClass;
-        });
-
-        renderTable(filtered);
-        if (searchVal.length > 0) {
-            renderMaterialList(filtered, searchVal);
+        const classFiltered = craftingData.filter(d => classVal === 'All' || d.classes.includes(classVal));
+        if (currentView === 'farming') {
+            renderFarmingGuide(classFiltered, searchVal);
+            return;
         }
+        const filtered = classFiltered.filter(d =>
+            normalizeText(d.item).includes(searchVal) ||
+            d.classes.some(cls => normalizeText(cls).includes(searchVal)) ||
+            d.ingredients.some(ing => normalizeText(ing.resource).includes(searchVal) || normalizeText(ing.location).includes(searchVal))
+        );
+        renderTable(filtered);
+        if (searchVal.length > 0) renderMaterialList(filtered, searchVal);
     }
 
     renderTable(craftingData);
