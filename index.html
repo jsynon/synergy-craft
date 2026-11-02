@@ -326,7 +326,37 @@
       footer { flex-direction:column; align-items:flex-start; font-size:9px; }
     }
 
-  </style>
+  
+    /* Recipe cards use the same midnight panel treatment as the guild dashboard. */
+    .tool-section { margin-top:0; }
+    .tool-section > .section-heading { margin:0 0 14px; padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; }
+    .tool-section > .section-heading .section-kicker { color:var(--teal); }
+    .tool-section > .section-heading h2 { color:var(--gold-bright); text-shadow:none; }
+    .tool-section > .section-heading .section-intro { color:var(--muted); }
+    .filter-panel,.tool-section .filter-panel { margin:0 0 14px; border:1px solid rgba(180,158,121,.34); border-radius:0; background:linear-gradient(145deg,rgba(17,31,45,.98),rgba(9,18,27,.98)); box-shadow:0 12px 34px rgba(0,0,0,.19); }
+    .field label { color:var(--teal); }
+    .field input,.field select { color:var(--text); border-color:rgba(194,207,218,.24); border-radius:3px; background:#0d1824; font-family:var(--body); }
+    .field input::placeholder { color:#91a1ae; }
+    .field input:focus,.field select:focus { border-color:var(--teal); box-shadow:0 0 0 3px rgba(89,201,232,.13); }
+    select option { color:var(--text); background:#0d1824; }
+    .result-bar { color:var(--muted); }
+    .result-bar strong { color:var(--gold-bright); }
+    .clear-button { padding:5px 8px; color:var(--gold-bright); border:1px solid var(--line); border-radius:3px; background:transparent; font:600 10px var(--body); }
+    .clear-button:hover { background:rgba(177,138,72,.12); }
+    .item-card { overflow:hidden; border:1px solid rgba(180,158,121,.34); border-radius:0; background:linear-gradient(145deg,rgba(17,31,45,.98),rgba(9,18,27,.98)); box-shadow:0 12px 34px rgba(0,0,0,.19); }
+    .card-header { border-bottom:1px solid var(--line); background:linear-gradient(110deg,rgba(8,29,42,.96),rgba(16,28,40,.94) 58%,rgba(39,25,16,.94)); box-shadow:none; }
+    .card-header::after { border-color:rgba(89,201,232,.25); }
+    .class-badge { color:#b8eaf5; border-color:rgba(89,201,232,.28); border-radius:2px; background:rgba(89,201,232,.07); font-family:var(--body); }
+    .item-title { color:var(--gold-bright); text-shadow:none; }
+    .ingredient-row { border-bottom-color:rgba(190,204,215,.1); }
+    .qty { color:#12202a; border:0; border-radius:2px; background:var(--gold); font-family:var(--body); }
+    .name { color:#eff1ed; }
+    .location-text { color:var(--muted); }
+    .location-text strong { color:var(--teal); }
+    .color-orange { color:#efad70; font-weight:700; } .color-purple { color:#c39ae2; font-weight:700; } .color-blue { color:#87bce8; font-weight:700; }
+    .empty-state { color:var(--muted); border-color:var(--line); background:rgba(5,15,23,.55); }
+    .empty-state strong { color:var(--gold-bright); }
+</style>
 </head>
 <body>
   <div class="page-shell">
@@ -334,7 +364,7 @@
     <header class="masthead">
       <div class="brand-mark"><img src="assets/synergy-emblem.webp" alt="" aria-hidden="true"></div>
       <div class="brand-copy"><div class="brand-name">SYNERGY</div><div class="brand-subtitle">A Neverwinter Guild</div></div>
-      <nav aria-label="Site navigation"><a href="https://jsynon.github.io/synergy-dashboard/#roster">Member Directory</a><a href="https://jsynon.github.io/synergy-dashboard/#activity">Recent Activity</a><a href="https://jsynon.github.io/synergy-craft/">Masterwork Forge</a></nav>
+      <nav aria-label="Main menu"><a href="https://jsynon.github.io/synergy-dashboard/">Guild Roster</a><a href="https://jsynon.github.io/synergy-craft/">Masterwork Forge</a></nav>
       <a class="discord-link" href="https://discord.gg/eMzcD6wJzh" target="_blank" rel="noopener noreferrer">Join our Discord <span aria-hidden="true">↗</span></a>
     </header>
 
@@ -342,30 +372,13 @@
       <section class="hero" aria-labelledby="forge-title">
         <p class="eyebrow">A masterwork farming guide</p>
         <h1 id="forge-title">The Masterwork Forge</h1>
-        <p class="hero-subtitle">Know the route. Gather the rarest materials. Craft with purpose.</p>
+        <p class="hero-subtitle">Find the materials. Compare their sources. Craft with purpose.</p>
         <p class="credits">A community guide from <a href="https://discord.gg/eMzcD6wJzh" target="_blank" rel="noopener noreferrer">Synergy</a><br>Material research by <strong>Ivydora</strong> &amp; <strong>Asura</strong></p>
         <ul class="quick-stats" aria-label="Guide contents">
           <li><strong id="recipeCount">—</strong> recipes</li>
-          <li><strong id="routeCount">—</strong> farming routes</li>
-          <li><strong>9</strong> classes</li>
+                    <li><strong>9</strong> classes</li>
         </ul>
       </section>
-      <nav class="page-nav" aria-label="Forge sections">
-        <a href="#routes">Farming Routes</a>
-        <a href="#recipes">Recipes &amp; Sources</a>
-      </nav>
-      <section class="route-section" id="routes" aria-labelledby="routesTitle">
-        <div class="section-heading">
-          <div>
-            <p class="section-kicker">Plan your next run</p>
-            <h2 id="routesTitle">Choose a farming route</h2>
-            <p class="section-intro">Select an activity to see which recipe materials it can provide. Select it again to clear the route.</p>
-          </div>
-        </div>
-        <div id="routeGrid" class="route-grid" aria-label="Available farming routes"></div>
-        <p class="route-hint"><span>Tip:</span> You can also search for a material or filter recipes by class below.</p>
-      </section>
-
       <section class="tool-section" id="recipes" aria-labelledby="recipesTitle">
         <div class="section-heading">
           <div>
@@ -388,7 +401,7 @@
             </select>
           </div>
           <div class="field">
-            <label for="sourceFilter">Farming source</label>
+            <label for="sourceFilter">Material source</label>
             <select id="sourceFilter"><option value="All">All Sources</option></select>
           </div>
         </div>
@@ -400,10 +413,7 @@
       </section>
     </main>
 
-    <footer>
-      <p>Maintained by the <strong>Synergy</strong> Guild • Neverwinter • 2026</p>
-      <p>Always verify recipe costs and material sources in-game before final processing.</p>
-    </footer>
+    <footer><span>SYNERGY <i>✦</i> NEVERWINTER GUILD</span><span>Guild roster and Masterwork Forge community guides.</span></footer>
   </div>
   <script>
     const craftingData = [
@@ -699,19 +709,8 @@
   }
 ];
 
-    const routeSymbols = {
-      "Master Demonweb Pits": "⚔",
-      "Abyssal Hunt Mod: Tricky Reversal": "✧",
-      "Abyssal Hunt Mod: Itty Bitty": "❋",
-      "Advanced Demonweb Pits": "⌖",
-      "Demonweb Pits Campaign Store": "♜",
-      "Explorer Chart: Menzoberranzan": "⌕",
-      "Explorer Chart: Narbondellyn": "⌁",
-      "Stronghold Vendor": "♙"
-    };
-
-    const routeNames = [...new Set(craftingData.flatMap(recipe => recipe.ingredients.map(item => item.location)))].sort((a, b) => a.localeCompare(b));
-    let activeRoute = "All";
+    const sourceNames = [...new Set(craftingData.flatMap(recipe => recipe.ingredients.map(item => item.location)))].sort((a, b) => a.localeCompare(b));
+    let activeSource = "All";
 
     function parseIngredient(resource) {
       const match = resource.match(/^(\d+x)\s+(.+)$/);
@@ -726,40 +725,14 @@
       return "";
     }
 
-    function renderRouteChoices() {
-      const routeGrid = document.getElementById("routeGrid");
+    function populateSourceFilter() {
       const sourceFilter = document.getElementById("sourceFilter");
-      routeGrid.innerHTML = "";
-      routeNames.forEach(location => {
-        const materials = new Set();
-        const recipes = new Set();
-        craftingData.forEach(recipe => recipe.ingredients.forEach(ingredient => {
-          if (ingredient.location === location) {
-            materials.add(normalizeSearchText(parseIngredient(ingredient.resource).name));
-            recipes.add(recipe.item);
-          }
-        }));
+      sourceNames.forEach(location => {
         const option = document.createElement("option");
         option.value = location;
         option.textContent = location;
         sourceFilter.appendChild(option);
-
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "route-button";
-        button.dataset.route = location;
-        button.setAttribute("aria-pressed", "false");
-        const materialLabel = materials.size === 1 ? "material" : "materials";
-        const recipeLabel = recipes.size === 1 ? "recipe" : "recipes";
-        button.innerHTML = `<span class="route-icon" aria-hidden="true">${routeSymbols[location] || "✦"}</span><span class="route-copy"><span class="route-name">${location}</span><span class="route-meta">${materials.size} ${materialLabel} · ${recipes.size} ${recipeLabel}</span></span>`;
-        button.addEventListener("click", () => {
-          activeRoute = activeRoute === location ? "All" : location;
-          sourceFilter.value = activeRoute;
-          filterData();
-        });
-        routeGrid.appendChild(button);
       });
-      document.getElementById("routeCount").textContent = routeNames.length;
     }
 
     function renderTable(data) {
@@ -772,7 +745,7 @@
       data.forEach(entry => {
         const card = document.createElement("article");
         card.className = "item-card";
-        const ingredients = activeRoute === "All" ? entry.ingredients : entry.ingredients.filter(item => item.location === activeRoute);
+        const ingredients = activeSource === "All" ? entry.ingredients : entry.ingredients.filter(item => item.location === activeSource);
         const badgesHtml = entry.classes.map(cls => `<span class="class-badge">${cls}</span>`).join("");
         const ingredientHtml = ingredients.map(ingredient => {
           const parsed = parseIngredient(ingredient.resource);
@@ -790,17 +763,17 @@
     function filterData() {
       const searchVal = normalizeSearchText(document.getElementById("searchInput").value.trim());
       const classVal = document.getElementById("classFilter").value;
-      activeRoute = document.getElementById("sourceFilter").value;
+      activeSource = document.getElementById("sourceFilter").value;
       const filtered = craftingData.filter(recipe => {
         const matchesClass = classVal === "All" || recipe.classes.includes(classVal);
-        const matchesRoute = activeRoute === "All" || recipe.ingredients.some(ingredient => ingredient.location === activeRoute);
+        const matchesRoute = activeSource === "All" || recipe.ingredients.some(ingredient => ingredient.location === activeSource);
         const searchableText = normalizeSearchText([recipe.item, ...recipe.classes, ...recipe.ingredients.flatMap(ingredient => [ingredient.resource, ingredient.location])].join(" "));
         return matchesClass && matchesRoute && searchableText.includes(searchVal);
       });
       renderTable(filtered);
       document.getElementById("recipeCount").textContent = craftingData.length;
-      document.getElementById("resultCount").innerHTML = `<strong>${filtered.length}</strong> ${filtered.length === 1 ? "recipe" : "recipes"}${activeRoute !== "All" ? ` · showing materials from <strong>${activeRoute}</strong>` : " found"}`;
-      document.querySelectorAll(".route-button").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.route === activeRoute)));
+      document.getElementById("resultCount").innerHTML = `<strong>${filtered.length}</strong> ${filtered.length === 1 ? "recipe" : "recipes"}${activeSource !== "All" ? ` · showing materials from <strong>${activeSource}</strong>` : " found"}`;
+      
     }
 
     document.getElementById("searchInput").addEventListener("input", filterData);
@@ -813,7 +786,7 @@
       filterData();
     });
 
-    renderRouteChoices();
+    populateSourceFilter();
     filterData();
   </script>
 </body>
