@@ -373,11 +373,7 @@
         <p class="eyebrow">A masterwork farming guide</p>
         <h1 id="forge-title">The Masterwork Forge</h1>
         <p class="hero-subtitle">Find the materials. Compare their sources. Craft with purpose.</p>
-        <p class="credits">A community guide from <a href="https://discord.gg/eMzcD6wJzh" target="_blank" rel="noopener noreferrer">Synergy</a><br>Material research by <strong>Ivydora</strong> &amp; <strong>Asura</strong></p>
-        <ul class="quick-stats" aria-label="Guide contents">
-          <li><strong id="recipeCount">—</strong> recipes</li>
-                    <li><strong>9</strong> classes</li>
-        </ul>
+        
       </section>
       <section class="tool-section" id="recipes" aria-labelledby="recipesTitle">
         <div class="section-heading">
@@ -390,7 +386,7 @@
         <div class="filter-panel" role="search">
           <div class="field">
             <label for="searchInput">Search</label>
-            <input type="search" id="searchInput" placeholder="Item, material, or activity…" autocomplete="off">
+            <input type="search" id="searchInput" placeholder="Item, material, or source" autocomplete="off">
           </div>
           <div class="field">
             <label for="classFilter">Class</label>
@@ -413,7 +409,7 @@
       </section>
     </main>
 
-    <footer><span>SYNERGY <i>✦</i> NEVERWINTER GUILD</span><span>Guild roster and Masterwork Forge community guides.</span></footer>
+    <footer><span>SYNERGY <i>✦</i> NEVERWINTER GUILD</span><span>Guild roster and Masterwork Forge community guides.<span class="footer-credit">Material research by <strong>Ivydora</strong> &amp; <strong>Asura</strong></span></span></footer>
   </div>
   <script>
     const craftingData = [
@@ -771,7 +767,6 @@
         return matchesClass && matchesRoute && searchableText.includes(searchVal);
       });
       renderTable(filtered);
-      document.getElementById("recipeCount").textContent = craftingData.length;
       document.getElementById("resultCount").innerHTML = `<strong>${filtered.length}</strong> ${filtered.length === 1 ? "recipe" : "recipes"}${activeSource !== "All" ? ` · showing materials from <strong>${activeSource}</strong>` : " found"}`;
       
     }
