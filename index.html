@@ -85,7 +85,7 @@
     .route-hint { margin:13px 0 0; color:#8f9ba6; font-size:.76rem; }
     .route-hint span { color:var(--gold); }
     .tool-section { margin-top:35px; scroll-margin-top:20px; }
-    .filter-panel { display:grid; grid-template-columns:minmax(220px,1.7fr) minmax(155px,.8fr) minmax(190px,1fr); gap:12px; margin:18px 0 14px; padding:14px; border:1px solid var(--line); background:rgba(19,30,42,.92); }
+    .filter-panel { display:grid; grid-template-columns:minmax(200px,1.5fr) minmax(135px,.75fr) minmax(180px,1fr) minmax(190px,1fr); gap:12px; margin:18px 0 14px; padding:14px; border:1px solid var(--line); background:rgba(19,30,42,.92); }
     .field label { display:block; margin:0 0 6px; color:#c2ccd4; font-size:.7rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
     .field input,.field select { width:100%; min-height:44px; padding:10px 12px; color:var(--text); border:1px solid rgba(194,207,218,.24); border-radius:3px; outline:none; background:#101a24; font:inherit; }
     .field input::placeholder { color:#7e8b96; }
@@ -747,6 +747,49 @@ footer {
     
     /* Prevent full-bleed 100vw header elements from creating page-level horizontal scrolling. */
     html,body { overflow-x:clip; }
+
+    /* Interactive material and source details */
+    .filter-note { grid-column:1/-1; margin:-2px 0 0; color:var(--muted); font-size:.74rem; }
+    .result-summary { display:flex; align-items:center; flex-wrap:wrap; gap:7px 12px; min-width:0; }
+    .active-filters { display:flex; flex-wrap:wrap; gap:5px; }
+    .filter-chip { padding:3px 8px; color:#bceefa; border:1px solid rgba(89,201,232,.32); border-radius:999px; background:rgba(8,37,51,.8); font:500 .7rem var(--body); cursor:pointer; }
+    .filter-chip:hover { border-color:var(--gold); color:var(--gold-bright); }
+    .detail-link { padding:0; border:0; background:none; color:var(--teal); text-decoration:underline; text-decoration-style:dotted; text-underline-offset:3px; cursor:pointer; text-align:left; }
+    .detail-link:hover,.detail-link:focus-visible { color:var(--gold-bright); }
+    .name.detail-link { display:block; font:600 .84rem var(--body); }
+    .name.detail-link.color-orange { color:#efad70; }
+    .name.detail-link.color-purple { color:#c39ae2; }
+    .name.detail-link.color-blue { color:#87bce8; }
+    .source-link { font-size:.72rem; }
+    .ingredient-row.source-match { padding-left:8px; border-left:2px solid var(--teal); background:rgba(33,143,171,.09); }
+    .ingredient-row.material-match { padding-left:8px; border-left:2px solid var(--gold); background:rgba(177,138,72,.12); }
+    .source-match-note { display:inline-block; margin-top:4px; color:#82d8eb; font-size:.64rem; letter-spacing:.06em; text-transform:uppercase; }
+    .detail-dialog { width:min(640px,calc(100% - 24px)); max-height:min(82vh,760px); padding:0; overflow:auto; color:var(--text); border:1px solid rgba(216,168,78,.86); border-radius:12px; background:#071925; box-shadow:0 24px 80px rgba(0,0,0,.72),inset 0 0 28px rgba(4,87,121,.12); }
+    .detail-dialog::backdrop { background:rgba(0,7,13,.76); backdrop-filter:blur(3px); }
+    .detail-dialog-content { position:relative; padding:25px; border:3px double rgba(245,216,142,.7); border-radius:11px; background:radial-gradient(ellipse at 8% 0%,rgba(10,109,144,.16),transparent 28rem),linear-gradient(145deg,#0b1b29,#080f18 70%,#18110c); }
+    .detail-dialog-close { position:absolute; top:12px; right:13px; width:34px; height:34px; color:var(--gold-bright); border:1px solid var(--line); border-radius:50%; background:rgba(7,12,20,.65); font-size:1.3rem; cursor:pointer; }
+    .detail-dialog-content .section-kicker { margin:0 40px 4px 0; }
+    .detail-dialog-content h2 { margin:0 36px 7px 0; color:var(--gold-bright); font:600 clamp(1.25rem,4vw,1.7rem)/1.25 var(--serif); overflow-wrap:anywhere; }
+    .detail-intro { margin:0 0 19px; color:var(--muted); font-size:.9rem; }
+    .detail-body h3 { margin:18px 0 7px; color:#bceefa; font:700 .72rem var(--body); letter-spacing:.11em; text-transform:uppercase; }
+    .detail-list { display:grid; gap:6px; margin:0; padding:0; list-style:none; }
+    .detail-list li { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 10px; border:1px solid rgba(89,201,232,.18); border-radius:5px; background:rgba(7,23,34,.76); }
+    .detail-list small { flex:0 0 auto; color:var(--muted); font-size:.68rem; text-align:right; }
+    .detail-list-button { padding:0; border:0; background:none; color:var(--teal); font:500 .82rem var(--body); text-align:left; text-decoration:underline; text-decoration-style:dotted; text-underline-offset:3px; cursor:pointer; }
+    .detail-list-button:hover { color:var(--gold-bright); }
+    .recipe-detail-list li { align-items:flex-start; flex-direction:column; gap:2px; }
+    .detail-recipe-name { color:var(--gold-bright); font:600 .82rem var(--serif); }
+    .recipe-detail-list small { text-align:left; }
+    .detail-dialog-actions { display:flex; justify-content:flex-end; margin-top:20px; padding-top:14px; border-top:1px solid var(--line); }
+    .detail-filter-button { padding:8px 12px; color:#07121c; border:1px solid #e5ba68; border-radius:5px; background:linear-gradient(135deg,#f2d68e,#c88b37); font:700 .78rem var(--body); cursor:pointer; }
+    .detail-filter-button:hover { filter:brightness(1.08); }
+    @media(max-width:620px) {
+      .filter-note { grid-column:1/-1; }
+      .result-bar { align-items:flex-start; gap:8px; }
+      .detail-dialog-content { padding:21px 16px; }
+      .detail-list li { align-items:flex-start; }
+      .detail-list small { max-width:44%; }
+    }
     </style>
   <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
 </head>
@@ -767,7 +810,7 @@ footer {
           <div>
             <p class="section-kicker">Materials and recipes</p>
             <h2 id="recipesTitle">The field guide</h2>
-            <p class="section-intro">Browse every verified recipe, or narrow the list to one class, source, or material.</p>
+            <p class="section-intro">Browse by class, material, or source. Select an ingredient or source for details.</p>
           </div>
         </div>
         <div class="filter-panel" role="search">
@@ -784,18 +827,38 @@ footer {
             </select>
           </div>
           <div class="field">
-            <label for="sourceFilter">Material source</label>
+            <label for="materialFilter">Material</label>
+            <select id="materialFilter"><option value="All">All Materials</option></select>
+          </div>
+          <div class="field">
+            <label for="sourceFilter">Source</label>
             <select id="sourceFilter"><option value="All">All Sources</option></select>
           </div>
+          <p class="filter-note">Source filters keep full recipes visible and highlight materials from that source.</p>
         </div>
         <div class="result-bar" aria-live="polite">
-          <span id="resultCount">Showing recipes</span>
+          <div class="result-summary">
+            <span id="resultCount">Showing recipes</span>
+            <div id="activeFilters" class="active-filters"></div>
+          </div>
           <button class="clear-button" id="clearFilters" type="button">Clear filters</button>
         </div>
         <div id="itemsGrid" class="items-grid"></div>
       </section>
     </main>
 
+    <dialog id="detailDialog" class="detail-dialog" aria-labelledby="detailTitle">
+      <div class="detail-dialog-content">
+        <button id="closeDetailDialog" class="detail-dialog-close" type="button" aria-label="Close details">×</button>
+        <p id="detailKicker" class="section-kicker"></p>
+        <h2 id="detailTitle"></h2>
+        <p id="detailIntro" class="detail-intro"></p>
+        <div id="detailBody" class="detail-body"></div>
+        <div class="detail-dialog-actions">
+          <button id="applyDetailFilter" class="detail-filter-button" type="button"></button>
+        </div>
+      </div>
+    </dialog>
     <footer><span>SYNERGY</span><span class="footer-credit">Material research by <strong>Ivydora</strong> &amp; <strong>Asura</strong></span></footer>
   </div>
   <script>
@@ -1092,8 +1155,8 @@ footer {
   }
 ];
 
-    const sourceNames = [...new Set(craftingData.flatMap(recipe => recipe.ingredients.map(item => item.location)))].sort((a, b) => a.localeCompare(b));
     let activeSource = "All";
+    let activeMaterial = "All";
 
     function parseIngredient(resource) {
       const match = resource.match(/^(\d+x)\s+(.+)$/);
@@ -1108,34 +1171,253 @@ footer {
       return "";
     }
 
-    function populateSourceFilter() {
-      const sourceFilter = document.getElementById("sourceFilter");
-      sourceNames.forEach(location => {
+    function createMaterialEntries() {
+      const entries = new Map();
+      craftingData.forEach(recipe => {
+        const seen = new Set();
+        recipe.ingredients.forEach(ingredient => {
+          const name = parseIngredient(ingredient.resource).name;
+          const key = normalizeSearchText(name);
+          if (!entries.has(key)) entries.set(key, { key, name, recipes: [] });
+          if (!seen.has(key)) {
+            entries.get(key).recipes.push(recipe);
+            seen.add(key);
+          }
+        });
+      });
+      return Array.from(entries.values()).sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    function createSourceEntries() {
+      const entries = new Map();
+      craftingData.forEach(recipe => {
+        const seenSources = new Set();
+        recipe.ingredients.forEach(ingredient => {
+          const location = ingredient.location;
+          if (!entries.has(location)) entries.set(location, { name: location, recipes: [], materials: new Map() });
+          const source = entries.get(location);
+          if (!seenSources.has(location)) {
+            source.recipes.push(recipe);
+            seenSources.add(location);
+          }
+          const name = parseIngredient(ingredient.resource).name;
+          const key = normalizeSearchText(name);
+          if (!source.materials.has(key)) source.materials.set(key, { key, name, recipes: [] });
+          const material = source.materials.get(key);
+          if (!material.recipes.includes(recipe)) material.recipes.push(recipe);
+        });
+      });
+      return Array.from(entries.values()).sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    const materialEntries = createMaterialEntries();
+    const sourceEntries = createSourceEntries();
+
+    function populateFilters() {
+      const materialFilter = document.getElementById("materialFilter");
+      materialEntries.forEach(material => {
         const option = document.createElement("option");
-        option.value = location;
-        option.textContent = location;
+        option.value = material.key;
+        option.textContent = material.name + " (" + material.recipes.length + ")";
+        materialFilter.appendChild(option);
+      });
+
+      const sourceFilter = document.getElementById("sourceFilter");
+      sourceEntries.forEach(source => {
+        const option = document.createElement("option");
+        option.value = source.name;
+        option.textContent = source.name + " (" + source.recipes.length + " recipes)";
         sourceFilter.appendChild(option);
       });
     }
 
-    function renderTable(data) {
-      const grid = document.getElementById("itemsGrid");
-      grid.innerHTML = "";
-      if (!data.length) {
-        grid.innerHTML = `<div class="empty-state"><strong>No recipes found</strong>Try another search or clear one of the filters.</div>`;
+    function createDetailButton(kind, value, label, className) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = className || "detail-link";
+      button.dataset.detailKind = kind;
+      button.dataset.detailValue = value;
+      button.textContent = label;
+      return button;
+    }
+
+    function appendDetailListItem(list, kind, value, label, note) {
+      const item = document.createElement("li");
+      item.appendChild(createDetailButton(kind, value, label, "detail-list-button"));
+      if (note) {
+        const small = document.createElement("small");
+        small.textContent = note;
+        item.appendChild(small);
+      }
+      list.appendChild(item);
+    }
+
+    function openDetail(kind, value) {
+      const dialog = document.getElementById("detailDialog");
+      const kicker = document.getElementById("detailKicker");
+      const title = document.getElementById("detailTitle");
+      const intro = document.getElementById("detailIntro");
+      const body = document.getElementById("detailBody");
+      const applyButton = document.getElementById("applyDetailFilter");
+      body.replaceChildren();
+
+      if (kind === "material") {
+        const material = materialEntries.find(entry => entry.key === normalizeSearchText(value));
+        if (!material) return;
+        kicker.textContent = "Crafting material";
+        title.textContent = material.name;
+        const sources = sourceEntries.filter(source => source.materials.has(material.key));
+        intro.textContent = "Used in " + material.recipes.length + " " + (material.recipes.length === 1 ? "recipe" : "recipes") + " across " + sources.length + " " + (sources.length === 1 ? "source" : "sources") + ".";
+        const sourceHeading = document.createElement("h3");
+        sourceHeading.textContent = "Gathered from";
+        body.appendChild(sourceHeading);
+        const sourceList = document.createElement("ul");
+        sourceList.className = "detail-list";
+        sources.forEach(source => appendDetailListItem(sourceList, "source", source.name, source.name, source.materials.get(material.key).recipes.length + " recipes use this material here"));
+        body.appendChild(sourceList);
+
+        const recipeHeading = document.createElement("h3");
+        recipeHeading.textContent = "Used in these recipes";
+        body.appendChild(recipeHeading);
+        const recipeList = document.createElement("ul");
+        recipeList.className = "detail-list recipe-detail-list";
+        material.recipes.forEach(recipe => {
+          const item = document.createElement("li");
+          const name = document.createElement("span");
+          name.className = "detail-recipe-name";
+          name.textContent = recipe.item;
+          const classes = document.createElement("small");
+          classes.textContent = recipe.classes.join(", ");
+          item.append(name, classes);
+          recipeList.appendChild(item);
+        });
+        body.appendChild(recipeList);
+      } else if (kind === "source") {
+        const source = sourceEntries.find(entry => entry.name === value);
+        if (!source) return;
+        const materials = Array.from(source.materials.values()).sort((a, b) => a.name.localeCompare(b.name));
+        kicker.textContent = "Material source";
+        title.textContent = source.name;
+        intro.textContent = "This source appears in " + source.recipes.length + " " + (source.recipes.length === 1 ? "recipe" : "recipes") + " and provides " + materials.length + " distinct " + (materials.length === 1 ? "material" : "materials") + ".";
+        const materialHeading = document.createElement("h3");
+        materialHeading.textContent = "Materials found here";
+        body.appendChild(materialHeading);
+        const materialList = document.createElement("ul");
+        materialList.className = "detail-list";
+        materials.forEach(material => appendDetailListItem(materialList, "material", material.key, material.name, "Used in " + material.recipes.length + " " + (material.recipes.length === 1 ? "recipe" : "recipes")));
+        body.appendChild(materialList);
+
+        const recipeHeading = document.createElement("h3");
+        recipeHeading.textContent = "Recipes using this source";
+        body.appendChild(recipeHeading);
+        const recipeList = document.createElement("ul");
+        recipeList.className = "detail-list recipe-detail-list";
+        source.recipes.forEach(recipe => {
+          const item = document.createElement("li");
+          const name = document.createElement("span");
+          name.className = "detail-recipe-name";
+          name.textContent = recipe.item;
+          const classes = document.createElement("small");
+          classes.textContent = recipe.classes.join(", ");
+          item.append(name, classes);
+          recipeList.appendChild(item);
+        });
+        body.appendChild(recipeList);
+      } else {
         return;
       }
+
+      applyButton.dataset.filterKind = kind;
+      applyButton.dataset.filterValue = value;
+      applyButton.textContent = "Filter recipes by this " + kind;
+      dialog.showModal();
+    }
+
+    function renderTable(data) {
+      const grid = document.getElementById("itemsGrid");
+      grid.replaceChildren();
+      if (!data.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+        const heading = document.createElement("strong");
+        heading.textContent = "No recipes found";
+        empty.append(heading, document.createTextNode("Try another search or clear one of the filters."));
+        grid.appendChild(empty);
+        return;
+      }
+
       data.forEach(entry => {
         const card = document.createElement("article");
         card.className = "item-card";
-        const ingredients = activeSource === "All" ? entry.ingredients : entry.ingredients.filter(item => item.location === activeSource);
-        const badgesHtml = entry.classes.map(cls => `<span class="class-badge">${cls}</span>`).join("");
-        const ingredientHtml = ingredients.map(ingredient => {
+        const header = document.createElement("header");
+        header.className = "card-header";
+        const badges = document.createElement("div");
+        badges.className = "badge-container";
+        entry.classes.forEach(className => {
+          const badge = document.createElement("span");
+          badge.className = "class-badge";
+          badge.textContent = className;
+          badges.appendChild(badge);
+        });
+        const heading = document.createElement("h3");
+        heading.className = "item-title";
+        heading.textContent = entry.item;
+        header.append(badges, heading);
+
+        const cardBody = document.createElement("div");
+        cardBody.className = "card-body";
+        entry.ingredients.forEach(ingredient => {
           const parsed = parseIngredient(ingredient.resource);
-          return `<div class="ingredient-row"><span class="qty">${parsed.qty}</span><div class="ingredient-info"><span class="name ${getColorClass(parsed.name)}">${parsed.name}</span><div class="location-text">Source: <strong>${ingredient.location}</strong></div></div></div>`;
-        }).join("");
-        card.innerHTML = `<header class="card-header"><div class="badge-container">${badgesHtml}</div><h3 class="item-title">${entry.item}</h3></header><div class="card-body">${ingredientHtml}</div>`;
+          const sourceMatch = activeSource !== "All" && ingredient.location === activeSource;
+          const materialMatch = activeMaterial !== "All" && normalizeSearchText(parsed.name) === activeMaterial;
+          const row = document.createElement("div");
+          row.className = "ingredient-row" + (sourceMatch ? " source-match" : "") + (materialMatch ? " material-match" : "");
+
+          const quantity = document.createElement("span");
+          quantity.className = "qty";
+          quantity.textContent = parsed.qty;
+          const info = document.createElement("div");
+          info.className = "ingredient-info";
+          info.appendChild(createDetailButton("material", parsed.name, parsed.name, "name detail-link " + getColorClass(parsed.name)));
+
+          const location = document.createElement("div");
+          location.className = "location-text";
+          location.appendChild(document.createTextNode("Source: "));
+          location.appendChild(createDetailButton("source", ingredient.location, ingredient.location, "source-link detail-link"));
+          info.appendChild(location);
+          if (sourceMatch) {
+            const note = document.createElement("span");
+            note.className = "source-match-note";
+            note.textContent = "Selected source";
+            info.appendChild(note);
+          }
+          row.append(quantity, info);
+          cardBody.appendChild(row);
+        });
+
+        card.append(header, cardBody);
         grid.appendChild(card);
+      });
+    }
+
+    function renderActiveFilters() {
+      const container = document.getElementById("activeFilters");
+      container.replaceChildren();
+      const values = [
+        ["search", document.getElementById("searchInput").value.trim(), "Search"],
+        ["class", document.getElementById("classFilter").value, "Class"],
+        ["material", document.getElementById("materialFilter").value, "Material"],
+        ["source", document.getElementById("sourceFilter").value, "Source"]
+      ];
+      values.forEach(([key, value, label]) => {
+        if (!value || value === "All") return;
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "filter-chip";
+        chip.dataset.clearFilter = key;
+        const display = key === "class" ? value : key === "source" ? value : key === "material" ? (materialEntries.find(entry => entry.key === value)?.name || value) : value;
+        chip.textContent = label + ": " + display + " ×";
+        container.appendChild(chip);
       });
     }
 
@@ -1146,29 +1428,59 @@ footer {
     function filterData() {
       const searchVal = normalizeSearchText(document.getElementById("searchInput").value.trim());
       const classVal = document.getElementById("classFilter").value;
+      activeMaterial = document.getElementById("materialFilter").value;
       activeSource = document.getElementById("sourceFilter").value;
       const filtered = craftingData.filter(recipe => {
         const matchesClass = classVal === "All" || recipe.classes.includes(classVal);
-        const matchesRoute = activeSource === "All" || recipe.ingredients.some(ingredient => ingredient.location === activeSource);
+        const matchesMaterial = activeMaterial === "All" || recipe.ingredients.some(ingredient => normalizeSearchText(parseIngredient(ingredient.resource).name) === activeMaterial);
+        const matchesSource = activeSource === "All" || recipe.ingredients.some(ingredient => ingredient.location === activeSource);
         const searchableText = normalizeSearchText([recipe.item, ...recipe.classes, ...recipe.ingredients.flatMap(ingredient => [ingredient.resource, ingredient.location])].join(" "));
-        return matchesClass && matchesRoute && searchableText.includes(searchVal);
+        return matchesClass && matchesMaterial && matchesSource && searchableText.includes(searchVal);
       });
       renderTable(filtered);
-      document.getElementById("resultCount").innerHTML = `<strong>${filtered.length}</strong> ${filtered.length === 1 ? "recipe" : "recipes"}${activeSource !== "All" ? ` · showing materials from <strong>${activeSource}</strong>` : " found"}`;
-      
+      document.getElementById("resultCount").textContent = filtered.length + " " + (filtered.length === 1 ? "recipe" : "recipes") + " found";
+      renderActiveFilters();
     }
-
     document.getElementById("searchInput").addEventListener("input", filterData);
     document.getElementById("classFilter").addEventListener("change", filterData);
+    document.getElementById("materialFilter").addEventListener("change", filterData);
     document.getElementById("sourceFilter").addEventListener("change", filterData);
+    document.getElementById("activeFilters").addEventListener("click", event => {
+      const chip = event.target.closest("[data-clear-filter]");
+      if (!chip) return;
+      const key = chip.dataset.clearFilter;
+      if (key === "search") document.getElementById("searchInput").value = "";
+      if (key === "class") document.getElementById("classFilter").value = "All";
+      if (key === "material") document.getElementById("materialFilter").value = "All";
+      if (key === "source") document.getElementById("sourceFilter").value = "All";
+      filterData();
+    });
     document.getElementById("clearFilters").addEventListener("click", () => {
       document.getElementById("searchInput").value = "";
       document.getElementById("classFilter").value = "All";
+      document.getElementById("materialFilter").value = "All";
       document.getElementById("sourceFilter").value = "All";
       filterData();
     });
+    document.getElementById("itemsGrid").addEventListener("click", event => {
+      const button = event.target.closest("[data-detail-kind]");
+      if (button) openDetail(button.dataset.detailKind, button.dataset.detailValue);
+    });
+    document.getElementById("detailBody").addEventListener("click", event => {
+      const button = event.target.closest("[data-detail-kind]");
+      if (button) openDetail(button.dataset.detailKind, button.dataset.detailValue);
+    });
+    document.getElementById("applyDetailFilter").addEventListener("click", event => {
+      const button = event.currentTarget;
+      if (button.dataset.filterKind === "material") document.getElementById("materialFilter").value = normalizeSearchText(button.dataset.filterValue);
+      if (button.dataset.filterKind === "source") document.getElementById("sourceFilter").value = button.dataset.filterValue;
+      document.getElementById("detailDialog").close();
+      filterData();
+      document.getElementById("recipes").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    document.getElementById("closeDetailDialog").addEventListener("click", () => document.getElementById("detailDialog").close());
 
-    populateSourceFilter();
+    populateFilters();
     filterData();
   </script>
 </body>
