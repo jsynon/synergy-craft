@@ -1330,7 +1330,7 @@ footer {
       applyButton.dataset.filterKind = kind;
       applyButton.dataset.filterValue = value;
       applyButton.textContent = "Filter recipes by this " + kind;
-      dialog.showModal();
+      if (!dialog.open) dialog.showModal();
     }
 
     function renderTable(data) {
