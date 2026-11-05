@@ -655,16 +655,56 @@ footer {
   .brand-banner .brand-banner-copy > img { width:min(74vw,360px); max-height:calc(100% - 18px); }
 }
 
-    </style>
+    
+/* Integrated Synergy header art and a stable three-link mobile menu */
+.brand-banner { height:clamp(240px,21vw,420px); }
+.brand-banner > .brand-banner-background { object-position:center 12%; }
+.brand-banner::after { display:none; }
+.masthead {
+  display:flex;
+  flex-wrap:nowrap;
+  justify-content:center;
+  align-items:stretch;
+  gap:0;
+}
+.masthead nav {
+  display:flex;
+  align-items:stretch;
+  justify-content:center;
+  width:min(100%,780px);
+  margin:0;
+  gap:0;
+}
+.masthead nav a,.masthead nav .discord-link {
+  display:flex;
+  flex:1 1 0;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  margin:0;
+  padding:10px clamp(8px,2vw,24px);
+  white-space:nowrap;
+}
+.masthead nav a + a,.masthead nav .discord-link { border-left:1px solid var(--frame-gold); }
+.masthead nav .discord-link { border-top:0; border-right:0; border-bottom:0; }
+@media(max-width:620px) {
+  .brand-banner { height:clamp(150px,42vw,190px); }
+  .masthead { min-height:48px; padding:0 2px; }
+  .masthead nav { width:100%; }
+  .masthead nav a,.masthead nav .discord-link {
+    padding:8px 2px;
+    font-size:clamp(.56rem,2.25vw,.72rem);
+    letter-spacing:0;
+  }
+}
+
+</style>
   <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
 </head>
 <body>
   <div class="page-shell">
-    <div class="brand-banner" role="img" aria-label="Synergy"><img class="brand-banner-background" src="assets/synergy-header.svg" alt=""><div class="brand-banner-copy"><img src="assets/synergy-wordmark.webp" alt=""></div></div>
-    <header class="masthead">
-      <nav aria-label="Main menu"><a href="https://jsynon.github.io/synergy-dashboard/">Guild Roster</a><a href="https://jsynon.github.io/synergy-craft/">Masterwork Forge</a></nav>
-      <a class="discord-link" href="https://discord.gg/eMzcD6wJzh" target="_blank" rel="noopener noreferrer">Join our Discord <span aria-hidden="true">↗</span></a>
-    </header>
+    <div class="brand-banner" role="img" aria-label="Synergy"><img class="brand-banner-background" src="assets/synergy-header-integrated.webp" alt=""></div>
+    <header class="masthead"><nav aria-label="Main menu"><a href="https://jsynon.github.io/synergy-dashboard/">Guild Roster</a><a href="https://jsynon.github.io/synergy-craft/">Masterwork Forge</a><a class="discord-link" href="https://discord.gg/eMzcD6wJzh" target="_blank" rel="noopener noreferrer">Join our Discord <span aria-hidden="true">↗</span></a></nav></header>
 
     <main>
       <section class="hero" aria-labelledby="forge-title">
