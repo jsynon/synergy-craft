@@ -744,6 +744,9 @@ footer {
 
     /* Slightly larger shared footer wordmark. */
     footer span:first-child { font-size:.98rem; }
+    
+    /* Prevent full-bleed 100vw header elements from creating page-level horizontal scrolling. */
+    html,body { overflow-x:clip; }
     </style>
   <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
 </head>
