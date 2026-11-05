@@ -738,6 +738,7 @@ footer {
 
     /* Give the Forge search field the same soft corners as the card frames. */
     #searchInput { border-radius:8px; }
+    #classFilter,#materialFilter,#sourceFilter { border-radius:8px; }
 
     /* The Forge filter panel has a more specific legacy radius; round it too. */
     .tool-section .filter-panel { border-radius:12px; overflow:hidden; }
@@ -834,7 +835,7 @@ footer {
             <label for="sourceFilter">Source</label>
             <select id="sourceFilter"><option value="All">All Sources</option></select>
           </div>
-          <p class="filter-note">Source filters keep full recipes visible and highlight materials from that source.</p>
+          <p class="filter-note">Material and source filters highlight matching recipe details.</p>
         </div>
         <div class="result-bar" aria-live="polite">
           <div class="result-summary">
