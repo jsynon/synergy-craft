@@ -724,6 +724,17 @@ footer {
   .hero-copy,.hero-subtitle { margin:3px 0 0; font-size:12px; line-height:1.3; }
 }
 
+
+    /* Round the actual outer panels so their outlines and inner headers share soft corners. */
+    .panel,.search-panel,.roster-panel,.recent-panel,.promotions-panel,.inactivity-panel,
+    .route-section,.filter-panel,.item-card,.detail-panel,.route-card,.hero {
+      border-radius:12px;
+      overflow:hidden;
+    }
+    .panel::before,.item-card::before,.route-section::before,.filter-panel::before,.detail-panel::before,.search-panel::before {
+      border-radius:9px;
+    }
+    .hero::before,.hero::after { border-radius:4px; }
 </style>
   <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
 </head>
