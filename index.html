@@ -765,6 +765,7 @@ footer {
     .ingredient-row.source-match { padding-left:8px; border-left:2px solid var(--teal); background:rgba(33,143,171,.09); }
     .ingredient-row.material-match { padding-left:8px; border-left:2px solid var(--gold); background:rgba(177,138,72,.12); }
     .source-match-note { display:inline-block; margin-top:4px; color:#82d8eb; font-size:.64rem; letter-spacing:.06em; text-transform:uppercase; }
+    .material-match-note { display:inline-block; margin-top:4px; color:var(--gold-bright); font-size:.64rem; letter-spacing:.06em; text-transform:uppercase; }
     .detail-dialog { width:min(640px,calc(100% - 24px)); max-height:min(82vh,760px); padding:0; overflow:auto; color:var(--text); border:1px solid rgba(216,168,78,.86); border-radius:12px; background:#071925; box-shadow:0 24px 80px rgba(0,0,0,.72),inset 0 0 28px rgba(4,87,121,.12); }
     .detail-dialog::backdrop { background:rgba(0,7,13,.76); backdrop-filter:blur(3px); }
     .detail-dialog-content { position:relative; padding:25px; border:3px double rgba(245,216,142,.7); border-radius:11px; background:radial-gradient(ellipse at 8% 0%,rgba(10,109,144,.16),transparent 28rem),linear-gradient(145deg,#0b1b29,#080f18 70%,#18110c); }
@@ -1469,6 +1470,12 @@ footer {
             const note = document.createElement("span");
             note.className = "source-match-note";
             note.textContent = "Selected source";
+            info.appendChild(note);
+          }
+          if (materialMatch) {
+            const note = document.createElement("span");
+            note.className = "material-match-note";
+            note.textContent = "Selected material";
             info.appendChild(note);
           }
           row.append(quantity, info);
