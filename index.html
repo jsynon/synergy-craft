@@ -921,6 +921,39 @@ footer {
     border-top: 1px solid var(--frame-gold);
   }
 }
+
+    /* Match the roster's magnifying glass search field treatment. */
+    .search-box {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+      padding:0 12px;
+      border:1px solid rgba(67,190,218,.38);
+      border-radius:8px;
+      background:#071722;
+      color:var(--teal);
+      font-size:20px;
+    }
+    .search-box span { flex:0 0 auto; }
+    .search-box #searchInput {
+      width:100%;
+      min-width:0;
+      min-height:42px;
+      padding:10px 0;
+      border:0;
+      border-radius:0;
+      outline:0;
+      color:var(--text);
+      background:transparent;
+      box-shadow:none;
+      font:14px var(--body);
+    }
+    .search-box:focus-within {
+      border-color:#38c9e1;
+      box-shadow:0 0 0 3px rgba(50,197,223,.13);
+    }
+    .search-box #searchInput:focus { border:0; box-shadow:none; }
 </style>
   <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
 </head>
