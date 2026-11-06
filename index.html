@@ -835,7 +835,32 @@ footer {
     .popup-shell .account-character-card { padding:10px 12px; }
     .popup-shell .detail-filter-button { border-radius:6px; }
     .popup-shell .detail-dialog-content { padding:0; border:0; border-radius:0; background:transparent; }
-    @media(max-width:620px) { dialog.popup-shell { padding:16px; } }
+    dialog.detail-dialog.popup-shell[open] {
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    .popup-shell .detail-dialog-content {
+      display:flex;
+      flex:1 1 auto;
+      flex-direction:column;
+      min-height:0;
+      max-height:calc(min(82vh,760px) - 50px);
+      overflow:hidden;
+    }
+    .popup-shell .detail-dialog-content > .section-kicker,
+    .popup-shell .detail-dialog-content > h2,
+    .popup-shell .detail-dialog-content > .detail-intro,
+    .popup-shell .detail-dialog-actions { flex:0 0 auto; }
+    .popup-shell .detail-body {
+      flex:1 1 auto;
+      min-height:0;
+      overflow-y:auto;
+      padding-right:5px;
+      scrollbar-color:#80643b #171d21;
+      scrollbar-width:thin;
+    }
+    @media(max-width:620px) { dialog.popup-shell { padding:16px; } .popup-shell .detail-dialog-content { max-height:calc(min(82vh,760px) - 38px); } }
     </style>
   <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
 </head>
