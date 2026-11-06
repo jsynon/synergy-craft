@@ -863,7 +863,29 @@ footer {
       scrollbar-width:thin;
     }
     @media(max-width:620px) { dialog.popup-shell { padding:16px; } .popup-shell .detail-dialog-content { max-height:calc(min(82vh,760px) - 38px); } }
-    </style>
+
+/* Keep all four shared menu labels inside their boxes on narrow screens. */
+@media(max-width:520px) {
+  .masthead nav {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    width:100%;
+  }
+  .masthead nav a,.masthead nav .discord-link {
+    min-width:0;
+    min-height:38px;
+    padding:8px 5px;
+    font-size:clamp(.68rem,3vw,.8rem);
+    letter-spacing:0;
+    border:0;
+  }
+  .masthead nav a:nth-child(even),.masthead nav .discord-link {
+    border-left:1px solid var(--frame-gold);
+  }
+  .masthead nav a:nth-child(n+3),.masthead nav .discord-link {
+    border-top:1px solid var(--frame-gold);
+  }
+}    </style>
   <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
 </head>
 <body>
