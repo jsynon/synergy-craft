@@ -780,6 +780,7 @@ footer {
     .detail-list-button:hover { color:var(--gold-bright); }
     .recipe-detail-list li { align-items:flex-start; flex-direction:column; gap:2px; }
     .detail-recipe-name { color:var(--gold-bright); font:600 .82rem var(--serif); }
+    .detail-recipe-quantity { color:#82d8eb!important; font-size:.72rem!important; font-weight:700; }
     .recipe-detail-list small { text-align:left; }
     .detail-dialog-actions { display:flex; justify-content:flex-end; margin-top:20px; padding-top:14px; border-top:1px solid var(--line); }
     .detail-filter-button { padding:8px 12px; color:#07121c; border:1px solid #e5ba68; border-radius:5px; background:linear-gradient(135deg,#f2d68e,#c88b37); font:700 .78rem var(--body); cursor:pointer; }
@@ -1357,9 +1358,17 @@ footer {
           const name = document.createElement("span");
           name.className = "detail-recipe-name";
           name.textContent = recipe.item;
+          const amountNeeded = recipe.ingredients.reduce((total, ingredient) => {
+            const parsed = parseIngredient(ingredient.resource);
+            if (normalizeSearchText(parsed.name) !== material.key) return total;
+            return total + (parseInt(parsed.qty, 10) || 0);
+          }, 0);
+          const quantity = document.createElement("small");
+          quantity.className = "detail-recipe-quantity";
+          quantity.textContent = amountNeeded > 0 ? amountNeeded + "x needed" : "Quantity not listed";
           const classes = document.createElement("small");
           classes.textContent = recipe.classes.join(", ");
-          item.append(name, classes);
+          item.append(name, quantity, classes);
           recipeList.appendChild(item);
         });
         body.appendChild(recipeList);
