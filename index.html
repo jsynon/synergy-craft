@@ -1338,7 +1338,7 @@ footer {
         kicker.textContent = "Crafting material";
         title.textContent = material.name;
         const sources = sourceEntries.filter(source => source.materials.has(material.key));
-        intro.textContent = "Used in " + material.recipes.length + " " + (material.recipes.length === 1 ? "recipe" : "recipes") + " across " + sources.length + " " + (sources.length === 1 ? "source" : "sources") + ".";
+        intro.textContent = "Used in " + material.recipes.length + " " + (material.recipes.length === 1 ? "recipe" : "recipes") + ".";
         const sourceHeading = document.createElement("h3");
         sourceHeading.textContent = "Gathered from";
         body.appendChild(sourceHeading);
