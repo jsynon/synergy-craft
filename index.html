@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#070c14">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://jsynon.github.io/synergy-craft/">
   <meta name="description" content="Browse Synergy’s Neverwinter masterwork recipes; filter by class, material, and source to find ingredients and crafting details.">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Synergy Guild">
+  <meta property="og:locale" content="en_US">
   <meta property="og:title" content="Masterwork Forge | Synergy">
   <meta property="og:description" content="Browse Synergy’s Neverwinter masterwork recipes; filter by class, material, and source to find ingredients and crafting details.">
   <meta property="og:url" content="https://jsynon.github.io/synergy-craft/">
@@ -973,13 +977,30 @@ footer {
       .filter-panel { gap:7px; padding:13px 11px; }
       .filter-panel .field select { min-height:40px; padding-left:8px; font-size:.72rem; }
     }
+
+    /* Five-link Synergy menu: three first-row links and two balanced below. */
+    @media(max-width:520px) {
+      .masthead nav { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); width:100%; }
+      .masthead nav > a,
+      .masthead nav > .discord-link { min-width:0; min-height:42px; padding:8px 3px; border:0; font-size:clamp(.57rem,2.7vw,.72rem); white-space:nowrap; }
+      .masthead nav > a:nth-child(1),
+      .masthead nav > a:nth-child(2),
+      .masthead nav > a:nth-child(3) { grid-column:span 2; }
+      .masthead nav > a:nth-child(4) { grid-column:1 / span 3; }
+      .masthead nav > .discord-link { grid-column:4 / span 3; }
+      .masthead nav > a:nth-child(4),
+      .masthead nav > .discord-link { border-top:1px solid var(--frame-gold); }
+      .masthead nav > a:nth-child(2),
+      .masthead nav > a:nth-child(3),
+      .masthead nav > .discord-link { border-left:1px solid var(--frame-gold); }
+    }
 </style>
   <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
 </head>
 <body>
   <div class="page-shell">
     <div class="brand-banner" role="img" aria-label="Synergy"><img class="brand-banner-background" src="assets/synergy-header-integrated.webp" alt=""></div>
-    <header class="masthead"><nav aria-label="Main menu"><a href="https://jsynon.github.io/synergy-dashboard/">Guild Roster</a><a href="https://jsynon.github.io/synergy-craft/">Masterwork</a><a href="https://jsynon.github.io/synergy-dashboard/guild-info.html">Guild Info</a><a class="discord-link" href="https://discord.gg/eMzcD6wJzh" target="_blank" rel="noopener noreferrer">Discord <span aria-hidden="true">↗</span></a></nav></header>
+    <header class="masthead"><nav aria-label="Main menu"><a href="https://jsynon.github.io/synergy-dashboard/news.html">News</a><a href="https://jsynon.github.io/synergy-dashboard/">Guild Roster</a><a href="https://jsynon.github.io/synergy-craft/">Masterwork</a><a href="https://jsynon.github.io/synergy-dashboard/guild-info.html">Guild Info</a><a class="discord-link" href="https://discord.gg/eMzcD6wJzh" target="_blank" rel="noopener noreferrer">Discord <span aria-hidden="true">↗</span></a></nav></header>
 
     <main>
       <section class="hero" aria-labelledby="forge-title">
