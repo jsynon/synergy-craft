@@ -111,6 +111,8 @@
     .clear-button { padding:5px 9px; color:var(--gold-bright); border:1px solid var(--line); border-radius:3px; background:transparent; font:600 .75rem var(--body); cursor:pointer; }
     .clear-button:hover { background:rgba(210,173,104,.1); }
     .items-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr)); gap:14px; }
+    .crafting-request-note { margin:18px 0 0; color:var(--muted); font-size:.84rem; line-height:1.6; text-align:center; }
+    .crafting-request-note a { display:inline-block; color:var(--gold-bright); font-weight:700; white-space:nowrap; }
     .item-card { overflow:hidden; border:1px solid rgba(210,173,104,.27); border-radius:4px; background:linear-gradient(155deg,#1c2b39,#14212d); box-shadow:0 8px 22px rgba(0,0,0,.14); }
     .card-header { position:relative; padding:15px 17px 14px; border-bottom:1px solid var(--line); background:linear-gradient(110deg,rgba(65,58,43,.4),rgba(24,39,52,.35)); }
     .card-header::after { content:""; position:absolute; top:0; right:0; width:44px; height:44px; border-top:1px solid rgba(210,173,104,.35); border-right:1px solid rgba(210,173,104,.35); }
@@ -1051,6 +1053,7 @@ footer {
         </div>
         <div id="itemsGrid" class="items-grid"></div>
       </section>
+      <p class="crafting-request-note">Crafting requests can be posted in the <a href="https://discord.com/channels/964991521524944956/1488094701138608199" target="_blank" rel="noopener noreferrer">#🛠️│𝙲𝚛𝚊𝚏𝚝𝚒𝚗𝚐-𝚁𝚎𝚚𝚞𝚎𝚜𝚝𝚜</a> Discord channel.</p>
     </main>
 
     <dialog id="detailDialog" class="popup-shell detail-dialog" aria-labelledby="detailTitle">
