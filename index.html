@@ -1052,6 +1052,16 @@ footer {
 }
 .hero { border:1px solid rgba(216,168,78,.82); }
 .item-card { border-color:rgba(216,168,78,.27); }
+/* Corner brackets removed: the 44px gold corner tick defined for card and
+   panel headings is retired site-wide - the plain double frame reads cleaner
+   without it. No Masterwork element currently uses these heading styles, so
+   nothing visible changes here today; this retires the bracket in code too,
+   so it cannot resurface on a future card. */
+.card-header::after,
+.roster-panel > .panel-heading::after,
+.recent-panel > .panel-heading::after,
+.promotions-panel > .panel-heading::after,
+.inactivity-panel > .panel-heading::after { content:none; }
 </style>
   <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
 </head>
