@@ -1038,6 +1038,20 @@ footer {
     border-radius:12px;
   }
 }
+/* Unified frame and gold: one border language for the whole site.
+   The header stack (banner, menu bar, hero title panel) shares a single spec -
+   1px frame gold at full strength (.82) - and every quieter border below it
+   keeps its current weight but shifts to the same gold hue (216,168,78, the
+   --frame-gold family), replacing the older golds the design accumulated
+   (190,160,103 / 204,169,103 / 180,158,121 / 177,138,72). Hierarchy is
+   preserved - header strong, content quiet - but everything reads as one
+   metal, cast for one guild. */
+:root { --line:rgba(216,168,78,.36); }
+@media (min-width:621px) {
+  .masthead { border-color:rgba(216,168,78,.82); }
+}
+.hero { border:1px solid rgba(216,168,78,.82); }
+.item-card { border-color:rgba(216,168,78,.27); }
 </style>
   <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
 </head>
